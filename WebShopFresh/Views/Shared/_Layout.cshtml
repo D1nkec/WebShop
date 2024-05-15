@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebShopFresh</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebshopFresh.styles.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+            <div class="container-fluid">
+                <a class="navbar-brand keychainify-checked" href="#">Logo coming soon...</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
+                        </li>
+                        
+                    </ul>
+                    <form asp-controller="Home" asp-action="#" method="post" class="d-flex">
+                        <input class="form-control me-sm-2" type="search" name="searchString" placeholder="Search" autocomplete="off">
+                        <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit"><i class="fas fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 text-center text-lg-left">
+                    &copy; 2024 - <strong>WebShop</strong>
+                </div>
+                <div class="col-lg-6 text-center text-lg-right mt-2 mt-lg-0">
+                    Follow us:
+                    <a href="#" class="ml-2"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="ml-2"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="ml-2"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 text-center text-lg-left">
+                &copy; 2024 - <strong>WebShop</strong> 
+            </div>
+            <div class="col-lg-6 text-center text-lg-right mt-2 mt-lg-0">
+                Follow us:
+                <a href="#" class="ml-2"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="ml-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="ml-2"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+</footer>

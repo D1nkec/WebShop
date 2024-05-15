@@ -1,0 +1,28 @@
+﻿@model WebShopFresh.Shared.Models.ViewModel.ProductViewModel
+
+@{
+    ViewData["Title"] = "Product";
+}
+
+<div class="container mt-4">
+    <div class="card mb-3 col-md-6 mx-auto">
+        <h3 class="card-header text-center bg-primary text-white">@ViewData["Title"]</h3>
+        <div class="card-body">
+            <h4 class="card-title">@Model.Name</h4>
+            <p class="card-text text-muted">@Model.Description</p>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3">Category:</dt>
+                <dd class="col-sm-9">@Model.CategoryId</dd>
+                <dt class="col-sm-3">Price:</dt>
+                <dd class="col-sm-9">@Model.Price</dd>
+                <dt class="col-sm-3">Quantity:</dt>
+                <dd class="col-sm-9">@Model.Quantity</dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+             <a asp-action="Products" class="btn btn-secondary">Back to List</a>
+        </div>
+    </div>
+</div>
