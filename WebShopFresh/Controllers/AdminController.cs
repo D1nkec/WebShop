@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using WebShopFresh.Data;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding;
+using System.Threading.Tasks;
 
 namespace WebShopFresh.Controllers
 {
@@ -21,134 +21,171 @@ namespace WebShopFresh.Controllers
 
 
 
-        public async Task<IActionResult> Index()
-        {
-            // NO VIEW
-            var categories = await _categoryService.GetCategories();
-            return View(categories);
-        }
 
-
-
-      /// <summary>
-        /// CREATE CATEGORY
+        /// <summary>
+        /// Displays details of a specific product.
         /// </summary>
-        /// <returns></returns>
-        public async Task<IActionResult> CreateCategory()
-        {
-
-            //NO VIEW
-            return View();
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateCategory(CategoryBinding model)
-        {
-            await _categoryService.AddCategory(model);
-            return RedirectToAction("Index");
-        }
-
-      /// <summary>
-        /// CREATE PRODUCT
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        public async Task<IActionResult> CreateProduct(long categoryId)
-        {
-            var model = new ProductBinding
-            {
-                CategoryId = categoryId
-            };
-            // NO VIEW
-            return View(model);
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateProduct(ProductBinding model)
-        {
-            await _productService.AddProduct(model);
-            return RedirectToAction("ProductDetails", new { id = model.CategoryId });
-        }
-
-      /// <summary>
-      /// DETAILS - CATEGORY
-      /// </summary>
-      /// <param name="id"></param>
-      /// <returns></returns>
-        public async Task<IActionResult> CategoryDetails(long id)
-        {
-            // NO VIEW
-            var category = await _categoryService.GetCategory(id);
-            return View(category);
-        }
-
-      /// <summary>
-      /// DETAILS - PRODUCT
-      /// </summary>
-      /// <param name="id"></param>
-      /// <returns></returns>
         public async Task<IActionResult> ProductDetails(long id)
         {
             var product = await _productService.GetProduct(id);
             return View(product);
         }
 
-      /// <summary>
-        /// EDIT PRODUCT
+
+
+
+        /// <summary>
+        /// Displays a list of products.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        public async Task<IActionResult> Products(bool? valid = true)
+        {
+            var products = await _productService.GetProducts(valid);
+            return View(products);
+        }
+    
+
+
+    /// <summary>
+    /// Displays a list of categories.
+    /// </summary>
+    public async Task<IActionResult> Categories(bool? valid = true)
+        {
+            var categories = await _categoryService.GetCategories(valid);
+            return View(categories);
+        }
+
+
+
+
+        /// <summary>
+        /// Displays a form to create a new product.
+        /// </summary>
+        public IActionResult CreateProduct()
+        {
+            return View();
+        }
+
+
+
+
+        /// <summary>
+        /// Handles the submission of the new product form.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(ProductBinding model)
+        {
+            await _productService.AddProduct(model);
+            return RedirectToAction("Products");
+        }
+
+
+
+
+        /// <summary>
+        /// Displays a form to edit an existing product.
+        /// </summary>
         public async Task<IActionResult> EditProduct(long id)
         {
-            //NO VIEW
             var model = await _productService.GetProduct(id);
             var response = _mapper.Map<ProductUpdateBinding>(model);
             return View(response);
         }
+
+
+
+
+        /// <summary>
+        /// Handles the submission of the product edit form.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> EditProduct(ProductUpdateBinding model)
         {
-            var response = await  _productService.UpdateProduct(model);
-            return RedirectToAction("Details", new { id = response.CategoryId });
+            await _productService.UpdateProduct(model);
+            return RedirectToAction("Products");
         }
 
-      /// <summary>
-        /// EDIT CATEGORY
+
+
+
+        /// <summary>
+        /// Displays a form to create a new category.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+        public IActionResult CreateCategory()
+        {
+            return View();
+        }
+
+
+
+        /// <summary>
+        /// Handles the submission of the new category form.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> CreateCategory(CategoryBinding model)
+        {
+            await _categoryService.AddCategory(model);
+            return RedirectToAction("Categories");
+        }
+
+
+
+
+        /// <summary>
+        /// Displays details of a specific category.
+        /// </summary>
+        public async Task<IActionResult> CategoryDetails(long id)
+        {
+            var category = await _categoryService.GetCategory(id);
+            return View(category);
+        }
+
+
+
+        /// <summary>
+        /// Displays a form to edit an existing category.
+        /// </summary>
         public async Task<IActionResult> EditCategory(long id)
         {
-            //NO VIEW
             var model = await _categoryService.GetCategory(id);
             var response = _mapper.Map<CategoryUpdateBinding>(model);
             return View(response);
         }
+
+
+
+
+        /// <summary>
+        /// Handles the submission of the category edit form.
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> EditCategory(CategoryUpdateBinding model)
         {
-            _categoryService.UpdateCategory(model);
-            return RedirectToAction("Index");
+            await _categoryService.UpdateCategory(model);
+            return RedirectToAction("Categories");
         }
 
-      /// <summary>
-        /// DELETE PRODUCT
+
+
+
+        /// <summary>
+        /// Deletes a product.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<IActionResult> DeleteProduct(long id)
         {
-            var response = await _productService.DeleteProduct(id);
-            return RedirectToAction("ProductDetails", new {id = response.CategoryId});
+            await _productService.DeleteProduct(id);
+            return RedirectToAction("Products");
         }
 
-      /// <summary>
-        /// DELETE CATEGORY
+
+
+
+        /// <summary>
+        /// Deletes a category.
         /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public async Task<IActionResult> DeleteCategory(long id)
         {
             await _categoryService.DeleteCategory(id);
-            return RedirectToAction("Index");
+            return RedirectToAction("Categories");
         }
 
 

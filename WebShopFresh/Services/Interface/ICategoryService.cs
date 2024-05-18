@@ -5,10 +5,14 @@ namespace WebShopFresh.Services.Interface
 {
     public interface ICategoryService
     {
-        Task<CategoryViewModel> AddCategory(CategoryBinding model);
         Task<CategoryViewModel> GetCategory(long id);
-        Task<List<CategoryViewModel>> GetCategories(bool? valid = true);
+        Task<List<CategoryViewModel>> GetCategories(bool? valid);
+        Task<CategoryViewModel> AddCategory(CategoryBinding model);
         Task<CategoryViewModel> UpdateCategory(CategoryUpdateBinding model);
         Task<CategoryViewModel> DeleteCategory(long id);
     }
 }
+
+
+
+

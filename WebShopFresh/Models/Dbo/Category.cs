@@ -9,9 +9,7 @@ namespace WebShopFresh.Models.Dbo
         [Key]
         public long Id { get; set; }
 
-
-        public ICollection<Product> Products { get; set; }
-
+        public ICollection<Product>? Products { get; set; }
 
         public DateTime Created { get; set; } 
         public DateTime Updated { get; set; }

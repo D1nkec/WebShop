@@ -8,6 +8,8 @@ using WebShopFresh.Shared.Models.Binding;
 using Xunit.Sdk;
 
 using Microsoft.AspNetCore.Http;
+using WebShopFresh.Models.Dbo;
+using WebShopFresh.Shared.Models.ViewModel;
 
 namespace WebShopFresh.UnitTests
 {
@@ -37,9 +39,6 @@ namespace WebShopFresh.UnitTests
             Assert.NotNull(response);
             
         }
-
-
-
 
     }
 }

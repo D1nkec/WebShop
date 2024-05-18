@@ -24,11 +24,27 @@
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
                         
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Products">Products</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Categories">Categories</a>
+                        </li>
+
+
                     </ul>
-                    <form asp-controller="Home" asp-action="#" method="post" class="d-flex">
-                        <input class="form-control me-sm-2" type="search" name="searchString" placeholder="Search" autocomplete="off">
-                        <button class="btn btn-secondary my-2 my-sm-0 ml-2" type="submit"><i class="fas fa-search"></i></button>
+                    <form asp-controller="Home" asp-action="Search" method="get" class="d-flex align-items-center">
+                        <div class="input-group">
+                            <input type="text" name="SearchString" autocomplete="off" class="form-control" placeholder="Search" />
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
                     </form>
+
+
+
                 </div>
             </div>
         </nav>

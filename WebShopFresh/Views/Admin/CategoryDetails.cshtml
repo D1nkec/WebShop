@@ -1,7 +1,7 @@
-﻿@model WebShopFresh.Shared.Models.ViewModel.ProductViewModel
+﻿@model WebShopFresh.Shared.Models.ViewModel.CategoryViewModel
 
 @{
-    ViewData["Title"] = "Product";
+    ViewData["Title"] = "Category";
 }
 
 <div class="container mt-4">
@@ -13,15 +13,16 @@
             <hr />
             <dl class="row">
                 <dt class="col-sm-3">Category:</dt>
-                <dd class="col-sm-9">@Model.CategoryId</dd>
+                <dd class="col-sm-9">@Model.Id</dd>
                 <dt class="col-sm-3">Price:</dt>
-                <dd class="col-sm-9">@Model.Price</dd>
+                <dd class="col-sm-9">@Model.Name</dd>
                 <dt class="col-sm-3">Quantity:</dt>
-                <dd class="col-sm-9">@Model.Quantity</dd>
+                <dd class="col-sm-9">@Model.Description</dd>
             </dl>
         </div>
         <div class="card-footer text-center">
-             <a asp-action="Products" class="btn btn-secondary">Back to List</a>
+            <a asp-action="EditCategory" asp-route-id="@Model.Id" class="btn btn-primary">Edit</a>
+            <a asp-action="Categories" class="btn btn-secondary">Back to List</a>
         </div>
     </div>
 </div>

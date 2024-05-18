@@ -27,8 +27,10 @@ namespace WebShopFresh.Services.Implementation
         public async Task<CategoryViewModel> AddCategory(CategoryBinding model)
         {
             var dbo = _mapper.Map<Category>(model);
+
             _context.Categories.Add(dbo);
             await _context.SaveChangesAsync();
+
             return _mapper.Map<CategoryViewModel>(dbo);
         }
 
@@ -61,6 +63,7 @@ namespace WebShopFresh.Services.Implementation
                                                .FirstOrDefaultAsync(y => y.Id == id);
 
             dbo.Products = dbo.Products.Where(y => y.Valid).ToList();
+
             return _mapper.Map<CategoryViewModel>(dbo);
         }
 
@@ -75,10 +78,12 @@ namespace WebShopFresh.Services.Implementation
         {
             var dbo = await _context.Categories.FindAsync(model.Id);
             _mapper.Map(model, dbo);
+            await _context.SaveChangesAsync();
+
             return _mapper.Map<CategoryViewModel>(dbo);
         }
 
-
+       
 
         /// <summary>
         /// DELETE CATEGORY
@@ -90,6 +95,7 @@ namespace WebShopFresh.Services.Implementation
             var dbo = await _context.Categories.FindAsync(id);
             dbo.Valid = false;
             await _context.SaveChangesAsync();
+
             return _mapper.Map<CategoryViewModel>(dbo);
         }
 

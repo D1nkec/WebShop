@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebShopFresh.Data;
 
@@ -12,11 +11,9 @@ using WebShopFresh.Data;
 namespace WebShopFresh.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240515203428_initSeedProd")]
-    partial class initSeedProd
+    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -58,7 +55,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 1L,
-                            Created = new DateTime(2024, 5, 15, 22, 34, 27, 805, DateTimeKind.Local).AddTicks(2057),
+                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6176),
                             Description = "Test description",
                             Name = "Test kategorija",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -86,13 +83,14 @@ namespace WebShopFresh.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(9,2)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");
@@ -111,9 +109,33 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 1L,
                             CategoryId = 1L,
-                            Created = new DateTime(2024, 5, 15, 22, 34, 27, 805, DateTimeKind.Local).AddTicks(2273),
+                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6348),
                             Description = "Test description",
                             Name = "Test product",
+                            Price = 125m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6356),
+                            Description = "neki description",
+                            Name = "TELEVIZOR",
+                            Price = 125m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6360),
+                            Description = "Test description",
+                            Name = "kavica",
                             Price = 125m,
                             Quantity = 0m,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),

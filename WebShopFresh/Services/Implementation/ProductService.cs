@@ -31,8 +31,10 @@ namespace WebShopFresh.Services.Implementation
         public async Task<ProductViewModel> AddProduct(ProductBinding model)
         {
             var dbo = _mapper.Map<Product>(model);
+
             _context.Products.Add(dbo);
             await _context.SaveChangesAsync();
+
             return _mapper.Map<ProductViewModel>(dbo);
         }
 
@@ -55,9 +57,12 @@ namespace WebShopFresh.Services.Implementation
         /// GET PRODUCTS
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ProductViewModel>> GetProducts()
+        public async Task<List<ProductViewModel>> GetProducts(bool? valid = true)
         {
-            var products = await _context.Products.Include(y => y.Category).ToListAsync();
+            var products = await _context.Products
+                                         .Include(y => y.Category)
+                                         .Where(y => y.Valid == valid)
+                                         .ToListAsync();
             if (!products.Any())
             {
                 return new List<ProductViewModel>();
@@ -78,6 +83,7 @@ namespace WebShopFresh.Services.Implementation
             var dbo = await _context.Products.FindAsync(model.Id);
             _mapper.Map(model, dbo);
             await _context.SaveChangesAsync();
+
             return _mapper.Map<ProductViewModel>(dbo);
         }
 
@@ -90,13 +96,13 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<ProductViewModel> DeleteProduct(long id)
         {
-            var dbo = await _context.Products.Include(y => y.Category).FirstOrDefaultAsync(y => y.Id == id);
+            var dbo = await _context.Products
+                .Include(y => y.Category)
+                .FirstOrDefaultAsync(y => y.Id == id);
 
-
-            //Ova akcija označava proizvod kao nevažeći umjesto da se stvarno briše iz baze podataka.
             dbo.Valid = false;
-
             await _context.SaveChangesAsync();
+
             return _mapper.Map<ProductViewModel>(dbo);
         }
 
@@ -104,3 +110,5 @@ namespace WebShopFresh.Services.Implementation
 
     }
 }
+
+

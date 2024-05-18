@@ -9,7 +9,7 @@ namespace WebShopFresh.Models.Dbo
         [Key]
         public long Id { get; set; }
 
-        public Category Category { get; set; }
+        public Category? Category { get; set; }
         public long? CategoryId { get; set; }
 
         public DateTime Created { get; set ; }

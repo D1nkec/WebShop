@@ -32,6 +32,7 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 
+
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
@@ -49,6 +50,6 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Products}/{id?}");
+    pattern: "{controller=Admin}/{action=Products}/{id?}");
 app.MapRazorPages();
 app.Run();

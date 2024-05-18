@@ -9,12 +9,13 @@ namespace WebShopFresh.Mapping
     {
         public MappingProfile()
         {
+            // PRODUCT
+            CreateMap<ProductViewModel, ProductUpdateBinding>();
             CreateMap<Product, ProductViewModel>();
             CreateMap<ProductBinding, Product>();
             CreateMap<ProductUpdateBinding, Product>();
-            CreateMap<ProductViewModel, ProductBinding>();
 
-
+           // CATEGORY
             CreateMap<Category, CategoryViewModel>();
             CreateMap<CategoryBinding, Category>();
             CreateMap<CategoryUpdateBinding, Category>();

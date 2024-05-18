@@ -6,13 +6,13 @@ namespace WebShopFresh.Services.Interface
 {
     public interface IProductService
     {
-        Task<ProductViewModel> AddProduct(ProductBinding model);
-        Task<List<ProductViewModel>> GetProducts();
         Task<ProductViewModel> GetProduct(long id);
-
+        Task<List<ProductViewModel>> GetProducts(bool? valid);
+        Task<ProductViewModel> AddProduct(ProductBinding model);
+        Task<ProductViewModel> UpdateProduct(ProductUpdateBinding model);
         Task<ProductViewModel> DeleteProduct(long id);
 
-        Task<ProductViewModel> UpdateProduct(ProductUpdateBinding model);
+        
     }
 }
 
