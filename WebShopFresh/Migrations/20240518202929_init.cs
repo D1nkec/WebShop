@@ -40,6 +40,7 @@ namespace WebShopFresh.Migrations
                     Created = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Updated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Valid = table.Column<bool>(type: "bit", nullable: false),
+                    ImageUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Price = table.Column<decimal>(type: "decimal(9,2)", nullable: false),
@@ -58,16 +59,18 @@ namespace WebShopFresh.Migrations
             migrationBuilder.InsertData(
                 table: "Categories",
                 columns: new[] { "Id", "Created", "Description", "Name", "Updated", "Valid" },
-                values: new object[] { 1L, new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6176), "Test description", "Test kategorija", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true });
+                values: new object[] { 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4262), "Test description", "Test kategorija", new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true });
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "CategoryId", "Created", "Description", "Name", "Price", "Quantity", "Updated", "Valid" },
+                columns: new[] { "Id", "CategoryId", "Created", "Description", "ImageUrl", "Name", "Price", "Quantity", "Updated", "Valid" },
                 values: new object[,]
                 {
-                    { 1L, 1L, new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6348), "Test description", "Test product", 125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
-                    { 2L, 1L, new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6356), "neki description", "TELEVIZOR", 125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
-                    { 3L, 1L, new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6360), "Test description", "kavica", 125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true }
+                    { 1L, 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4385), "Test description", "/content/test-sku.jpg", "Test product", 125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
+                    { 2L, 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4392), "neki description", "/content/test-sku.jpg", "TEST", 125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
+                    { 3L, 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4395), "Test description", "/content/test-sku.jpg", "test", 25m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
+                    { 4L, 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4398), "neki description", "/content/test-sku.jpg", "TEST", 1125m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true },
+                    { 5L, 1L, new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4431), "neki description", "/content/test-sku.jpg", "TEST", 1525m, 0m, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), true }
                 });
 
             migrationBuilder.CreateIndex(

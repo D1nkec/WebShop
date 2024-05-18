@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using System.ComponentModel.DataAnnotations;
 using WebShopFresh.Shared.Interfaces;
 using WebShopFresh.Shared.Models.Base;
 
@@ -15,5 +16,8 @@ namespace WebShopFresh.Models.Dbo
         public DateTime Created { get; set ; }
         public DateTime Updated { get ; set; }
         public bool Valid { get; set ; }
+
+        [ValidateNever]
+        public string? ImageUrl { get; set; }
     }
 }

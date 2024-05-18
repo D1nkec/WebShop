@@ -4,11 +4,22 @@
     var currentSort = ViewData["CurrentSort"] as string;
     var nameSortParam = ViewData["NameSortParam"] as string;
     var priceSortParam = ViewData["PriceSortParam"] as string;
+    var currentFilter = ViewData["CurrentFilter"] as string;
 }
 
 <h1>Products</h1>
 
 <div class="container mt-4">
+    <!-- Search Form -->
+    <form asp-controller="Home" asp-action="Products" method="get" class="d-flex align-items-center mb-3">
+        <div class="input-group">
+            <input type="text" name="searchString" autocomplete="off" class="form-control" placeholder="Search" value="@currentFilter" />
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form>
+
     <!-- Sorting Dropdown -->
     <div class="row mb-4">
         <div class="col">
@@ -17,10 +28,10 @@
                     Sort By
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="sortDropdown">
-                    <li><a class="dropdown-item @(currentSort == "" ? "active" : "")" asp-action="Products" asp-route-sortOrder="">Name Ascending</a></li>
-                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="name_desc">Name Descending</a></li>
-                    <li><a class="dropdown-item @(currentSort == "price_asc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_asc">Price Ascending</a></li>
-                    <li><a class="dropdown-item @(currentSort == "price_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_desc">Price Descending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "" ? "active" : "")" asp-action="Products" asp-route-sortOrder="" asp-route-searchString="@currentFilter">Name Ascending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="name_desc" asp-route-searchString="@currentFilter">Name Descending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "price_asc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_asc" asp-route-searchString="@currentFilter">Price Ascending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "price_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_desc" asp-route-searchString="@currentFilter">Price Descending</a></li>
                 </ul>
             </div>
         </div>
@@ -32,7 +43,7 @@
             <div class="col">
                 <div class="card h-100 shadow">
                     <div class="card-img-container">
-                        @* <img src="@item.ImageUrl" class="card-img-top img-fluid" alt="@item.Title"> *@
+                         <img src="@item.ImageUrl" class="card-img-top img-fluid" alt="@item.Name"> 
                     </div>
                     <div class="card-body">
                         <h5 class="card-title">@item.Name</h5>

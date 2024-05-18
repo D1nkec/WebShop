@@ -22,5 +22,7 @@ namespace WebShopFresh.Shared.Models.Base
         [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Quantity { get; set; }
+
+        public string? ImageUrl { get; set; }
     }
 }

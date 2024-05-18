@@ -28,13 +28,19 @@ namespace WebShopFresh.Controllers
         }
 
 
-        public async Task<IActionResult> Products(string sortOrder, bool? valid = true)
+        public async Task<IActionResult> Products(string searchString, string sortOrder, bool? valid = true)
         {
             var products = await _productService.GetProducts(valid);
+
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
 
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
+            ViewData["CurrentFilter"] = searchString;
 
             switch (sortOrder)
             {
@@ -54,6 +60,7 @@ namespace WebShopFresh.Controllers
 
             return View(products);
         }
+
 
 
 

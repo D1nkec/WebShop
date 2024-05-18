@@ -55,7 +55,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 1L,
-                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6176),
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4262),
                             Description = "Test description",
                             Name = "Test kategorija",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -79,6 +79,9 @@ namespace WebShopFresh.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
@@ -109,8 +112,9 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 1L,
                             CategoryId = 1L,
-                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6348),
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4385),
                             Description = "Test description",
+                            ImageUrl = "/content/test-sku.jpg",
                             Name = "Test product",
                             Price = 125m,
                             Quantity = 0m,
@@ -121,9 +125,10 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 2L,
                             CategoryId = 1L,
-                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6356),
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4392),
                             Description = "neki description",
-                            Name = "TELEVIZOR",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
                             Price = 125m,
                             Quantity = 0m,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -133,10 +138,37 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 3L,
                             CategoryId = 1L,
-                            Created = new DateTime(2024, 5, 18, 18, 19, 32, 91, DateTimeKind.Local).AddTicks(6360),
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4395),
                             Description = "Test description",
-                            Name = "kavica",
-                            Price = 125m,
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "test",
+                            Price = 25m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4398),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1125m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2024, 5, 18, 22, 29, 29, 351, DateTimeKind.Local).AddTicks(4431),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
                             Quantity = 0m,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Valid = true

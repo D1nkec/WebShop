@@ -28,7 +28,8 @@ namespace WebShopFresh.Data
                      Name = "Test kategorija",
                      Created = DateTime.Now, 
                      Valid = true, 
-                     Description = "Test description"
+                     Description = "Test description",
+                    
                  }
 
               ); 
@@ -42,26 +43,52 @@ namespace WebShopFresh.Data
                      Valid = true, 
                      Description = "Test description",
                      Price = 125,
-                     CategoryId = 1
+                     CategoryId = 1,
+                     ImageUrl = "/content/test-sku.jpg"
                  },
                  new Product {
                      Id = 2, 
-                     Name = "TELEVIZOR", 
+                     Name = "TEST", 
                      Created = DateTime.Now, 
                      Valid = true, 
                      Description = "neki description",
                      Price = 125,
-                     CategoryId = 1
+                     CategoryId = 1,
+                     ImageUrl = "/content/test-sku.jpg"
                  },
                  new Product {
                      Id = 3, 
-                     Name = "kavica", 
+                     Name = "test", 
                      Created = DateTime.Now, 
                      Valid = true, 
                      Description = "Test description",
-                     Price = 125,
-                     CategoryId = 1
-                 } 
+                     Price = 25,
+                     CategoryId = 1,
+                     ImageUrl = "/content/test-sku.jpg"
+                 },
+                   new Product
+                   {
+                       Id = 4,
+                       Name = "TEST",
+                       Created = DateTime.Now,
+                       Valid = true,
+                       Description = "neki description",
+                       Price = 1125,
+                       CategoryId = 1,
+                       ImageUrl = "/content/test-sku.jpg"
+                   },
+
+                     new Product
+                     {
+                         Id = 5,
+                         Name = "TEST",
+                         Created = DateTime.Now,
+                         Valid = true,
+                         Description = "neki description",
+                         Price = 1525,
+                         CategoryId = 1,
+                         ImageUrl = "/content/test-sku.jpg"
+                     }
 
               );
         }
