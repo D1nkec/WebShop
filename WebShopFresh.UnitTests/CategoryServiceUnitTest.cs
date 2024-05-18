@@ -58,7 +58,7 @@ namespace WebShopFresh.UnitTests
             var deletedId = Categories[12].Id;
             await _categoryService.DeleteCategory(deletedId);
 
-            var allItems = await _categoryService.GetCategories();
+            var allItems = await _categoryService.GetCategories(true);
 
             Assert.Null(allItems.FirstOrDefault(y => y.Id == deletedId));
         }

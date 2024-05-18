@@ -8,6 +8,7 @@ namespace WebShopFresh.Controllers
 {
     public class AdminController : Controller
     {
+       
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
@@ -17,6 +18,7 @@ namespace WebShopFresh.Controllers
             _productService = productService;
             _categoryService = categoryService;
             _mapper = mapper;
+          
         }
 
 

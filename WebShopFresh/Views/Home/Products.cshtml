@@ -1,16 +1,31 @@
 ﻿@model IEnumerable<WebShopFresh.Shared.Models.ViewModel.ProductViewModel>
 
 @{
-    ViewData["Title"] = "Products";
-    ViewBag.CurrentSort = ViewBag.CurrentSort ?? "name";
-    ViewBag.NameSortParm = ViewBag.CurrentSort == "name" ? "name_desc" : "name";
-    ViewBag.PriceSortParm = ViewBag.CurrentSort == "price" ? "price_desc" : "price";
+    var currentSort = ViewData["CurrentSort"] as string;
+    var nameSortParam = ViewData["NameSortParam"] as string;
+    var priceSortParam = ViewData["PriceSortParam"] as string;
 }
 
 <h1>Products</h1>
 
-
 <div class="container mt-4">
+    <!-- Sorting Dropdown -->
+    <div class="row mb-4">
+        <div class="col">
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    Sort By
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                    <li><a class="dropdown-item @(currentSort == "" ? "active" : "")" asp-action="Products" asp-route-sortOrder="">Name Ascending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "name_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="name_desc">Name Descending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "price_asc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_asc">Price Ascending</a></li>
+                    <li><a class="dropdown-item @(currentSort == "price_desc" ? "active" : "")" asp-action="Products" asp-route-sortOrder="price_desc">Price Descending</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
     <div class="row row-cols-1 row-cols-md-4 g-3">
         @foreach (var item in Model)
         {

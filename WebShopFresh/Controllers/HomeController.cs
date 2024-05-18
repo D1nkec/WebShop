@@ -9,6 +9,8 @@ using System.Collections.Generic;
 using System.Linq;
 using WebShopFresh.Models.Dbo;
 using WebShopFresh.Shared.Models.ViewModel;
+using Microsoft.EntityFrameworkCore.Query.Internal;
+using Microsoft.AspNetCore.Identity;
 
 namespace WebShopFresh.Controllers
 {
@@ -16,20 +18,43 @@ namespace WebShopFresh.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductService _productService;
+       
 
         public HomeController(ILogger<HomeController> logger, IProductService productService)
         {
             _logger = logger;
             _productService = productService;
+           
         }
 
 
-
-        public async Task<IActionResult> Products(bool? valid = true)
+        public async Task<IActionResult> Products(string sortOrder, bool? valid = true)
         {
             var products = await _productService.GetProducts(valid);
+
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    products = products.OrderByDescending(p => p.Name).ToList();
+                    break;
+                case "price_desc":
+                    products = products.OrderByDescending(p => p.Price).ToList();
+                    break;
+                case "price_asc":
+                    products = products.OrderBy(p => p.Price).ToList();
+                    break;
+                default:
+                    products = products.OrderBy(p => p.Name).ToList();
+                    break;
+            }
+
             return View(products);
         }
+
 
 
 
