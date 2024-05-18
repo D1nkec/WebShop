@@ -23,24 +23,20 @@
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Products">Products</a>
                         </li>
-                        
+
                         <li class="nav-item">
                             <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Categories">Categories</a>
                         </li>
-
-
                     </ul>
-                 
-
-
-
                 </div>
             </div>
         </nav>
+  
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">
@@ -64,28 +60,9 @@
         </div>
     </footer>
 
-
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
-
-
-
-<footer class="border-top footer text-muted">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 text-center text-lg-left">
-                &copy; 2024 - <strong>WebShop</strong> 
-            </div>
-            <div class="col-lg-6 text-center text-lg-right mt-2 mt-lg-0">
-                Follow us:
-                <a href="#" class="ml-2"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="ml-2"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="ml-2"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-    </div>
-</footer>

@@ -20,6 +20,15 @@
         </div>
     </form>
 
+    <div class="btn-group mb-4" role="group" aria-label="Category buttons">
+        @foreach (var category in ViewBag.Categories)
+        {
+            <a asp-controller="Home" asp-action="Products" asp-route-categoryId="@category.Id" class="btn btn-primary">
+                @category.Name
+            </a>
+        }
+    </div>
+
     <!-- Sorting Dropdown -->
     <div class="row mb-4">
         <div class="col">

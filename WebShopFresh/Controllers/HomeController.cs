@@ -18,17 +18,19 @@ namespace WebShopFresh.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IProductService _productService;
+        private readonly ICategoryService _categoryService;
+        
        
-
-        public HomeController(ILogger<HomeController> logger, IProductService productService)
+        public HomeController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService)
         {
             _logger = logger;
             _productService = productService;
+            _categoryService = categoryService;
            
         }
 
 
-        public async Task<IActionResult> Products(string searchString, string sortOrder, bool? valid = true)
+        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
         {
             var products = await _productService.GetProducts(valid);
 
@@ -37,10 +39,16 @@ namespace WebShopFresh.Controllers
                 products = products.Where(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
             }
 
+            if (categoryId.HasValue)
+            {
+                products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
+            }
+
             ViewData["CurrentSort"] = sortOrder;
             ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
             ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentCategory"] = categoryId;
 
             switch (sortOrder)
             {
@@ -58,8 +66,12 @@ namespace WebShopFresh.Controllers
                     break;
             }
 
+            var categories = await _categoryService.GetCategories(valid: true);
+            ViewBag.Categories = categories;
+
             return View(products);
         }
+
 
 
 
