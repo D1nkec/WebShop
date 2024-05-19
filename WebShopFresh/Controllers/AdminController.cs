@@ -39,18 +39,21 @@ namespace WebShopFresh.Controllers
         /// <summary>
         /// Displays a list of products.
         /// </summary>
-        public async Task<IActionResult> Products(bool? valid = true)
+        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
         {
-            var products = await _productService.GetProducts(valid);
+            // Call ProductService method to get filtered, sorted products, and categories
+            var (products, categories) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid);
+
+            // Pass filtered and sorted products to the view
+            ViewBag.Categories = categories;
             return View(products);
         }
-    
 
 
-    /// <summary>
-    /// Displays a list of categories.
-    /// </summary>
-    public async Task<IActionResult> Categories(bool? valid = true)
+        /// <summary>
+        /// Displays a list of categories.
+        /// </summary>
+        public async Task<IActionResult> Categories(bool? valid = true)
         {
             var categories = await _categoryService.GetCategories(valid);
             return View(categories);

@@ -12,12 +12,15 @@ namespace WebShopFresh.Services.Implementation
 {
     public class ProductService : IProductService
     {
+       
         private readonly ApplicationDbContext _context;
+        private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public ProductService(ApplicationDbContext context, IMapper mapper)
+        public ProductService(ApplicationDbContext context, ICategoryService categoryService, IMapper mapper)
         {
             _context = context;
+            _categoryService = categoryService;
             _mapper = mapper;
         }
 
@@ -57,19 +60,52 @@ namespace WebShopFresh.Services.Implementation
         /// GET PRODUCTS
         /// </summary>
         /// <returns></returns>
-        public async Task<List<ProductViewModel>> GetProducts(bool? valid = true)
+        public async Task<(List<ProductViewModel> products, List<CategoryViewModel> categories)> GetFilteredSortedProductsAndCategories(string searchString, string sortOrder, long? categoryId, bool? valid = true)
         {
-            var products = await _context.Products
-                                         .Include(y => y.Category)
-                                         .Where(y => y.Valid == valid)
-                                         .ToListAsync();
-            if (!products.Any())
-            {
-                return new List<ProductViewModel>();
-            }
+    // Get all products
+    var products = await _context.Products
+                                 .Include(y => y.Category)
+                                 .Where(y => y.Valid == valid)
+                                 .ToListAsync();
 
-            return products.Select(y => _mapper.Map<ProductViewModel>(y)).ToList();
-        }
+    // Apply filters
+    if (!string.IsNullOrEmpty(searchString))
+    {
+        products = products.Where(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
+
+    if (categoryId.HasValue)
+    {
+        products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
+    }
+
+    // Apply sorting
+    switch (sortOrder)
+    {
+        case "name_desc":
+            products = products.OrderByDescending(p => p.Name).ToList();
+            break;
+        case "price_desc":
+            products = products.OrderByDescending(p => p.Price).ToList();
+            break;
+        case "price_asc":
+            products = products.OrderBy(p => p.Price).ToList();
+            break;
+        default:
+            products = products.OrderBy(p => p.Name).ToList();
+            break;
+    }
+
+    // Get categories
+    var categories = await _categoryService.GetCategories(valid: true);
+
+    // Map entities to view models
+    var productViewModels = products.Select(y => _mapper.Map<ProductViewModel>(y)).ToList();
+    var categoryViewModels = categories.Select(y => _mapper.Map<CategoryViewModel>(y)).ToList();
+
+    return (productViewModels, categoryViewModels);
+}
+
 
 
 

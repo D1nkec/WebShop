@@ -32,46 +32,13 @@ namespace WebShopFresh.Controllers
 
         public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
         {
-            var products = await _productService.GetProducts(valid);
+            // Call ProductService method to get filtered, sorted products, and categories
+            var (products, categories) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid);
 
-            if (!string.IsNullOrEmpty(searchString))
-            {
-                products = products.Where(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
-            }
-
-            if (categoryId.HasValue)
-            {
-                products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
-            }
-
-            ViewData["CurrentSort"] = sortOrder;
-            ViewData["NameSortParam"] = string.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["PriceSortParam"] = sortOrder == "price_asc" ? "price_desc" : "price_asc";
-            ViewData["CurrentFilter"] = searchString;
-            ViewData["CurrentCategory"] = categoryId;
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    products = products.OrderByDescending(p => p.Name).ToList();
-                    break;
-                case "price_desc":
-                    products = products.OrderByDescending(p => p.Price).ToList();
-                    break;
-                case "price_asc":
-                    products = products.OrderBy(p => p.Price).ToList();
-                    break;
-                default:
-                    products = products.OrderBy(p => p.Name).ToList();
-                    break;
-            }
-
-            var categories = await _categoryService.GetCategories(valid: true);
+            // Pass filtered and sorted products to the view
             ViewBag.Categories = categories;
-
             return View(products);
         }
-
 
 
 

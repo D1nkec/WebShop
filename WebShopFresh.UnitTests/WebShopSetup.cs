@@ -117,14 +117,14 @@ namespace WebShopFresh.UnitTests
         /// <returns>An instance of the ProductService.</returns>
         protected IProductService GetProductService(ApplicationDbContext? context = null)
         {
-            if(context != null)
+            if (context != null)
             {
-                return new ProductService(context, Mapper);
+                return new ProductService(context, null, Mapper);
             }
 
-            return new ProductService(InMemoryDbContext, Mapper);
-
+            return new ProductService(InMemoryDbContext, null, Mapper);
         }
+
 
         /// <summary>
         /// Creates an instance of the CategoryService with the provided database context or the in-memory context if none is provided.
