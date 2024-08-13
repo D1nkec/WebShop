@@ -3,13 +3,6 @@ using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebShopFresh.Models;
 using WebShopFresh.Services.Interface;
-using System.Threading.Tasks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using WebShopFresh.Models.Dbo;
-using WebShopFresh.Shared.Models.ViewModel;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using Microsoft.AspNetCore.Identity;
 
 namespace WebShopFresh.Controllers

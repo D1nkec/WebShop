@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WebShopFresh.Shared.Models.Base;
+using WebShopFresh.Shared.Models.Base.CategoryModels;
+using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 
-namespace WebShopFresh.Shared.Models.ViewModel
+namespace WebShopFresh.Shared.Models.ViewModel.CategoryModels
 {
     public class CategoryViewModel : CategoryBase
     {

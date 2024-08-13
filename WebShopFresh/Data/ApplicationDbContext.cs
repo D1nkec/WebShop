@@ -1,12 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using WebShopFresh.Models.Dbo;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
+using WebShopFresh.Models.Dbo.CategoryModels;
+using WebShopFresh.Models.Dbo.OrderModels;
+using WebShopFresh.Models.Dbo.ProductModels;
+using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Shared.Interfaces;
-using WebShopFresh.Shared.Models.Binding;
-using WebShopFresh.Shared.Models.ViewModel;
+
 
 namespace WebShopFresh.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -278,7 +281,8 @@ namespace WebShopFresh.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
 
-
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
     }
 }

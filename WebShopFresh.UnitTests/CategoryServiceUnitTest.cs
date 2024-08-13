@@ -37,7 +37,7 @@ namespace WebShopFresh.UnitTests
         [Fact]
         public async void AddCategory_AddsNewEntityToDb_ReturnsViewModel()
         {
-            var response = await _categoryService.AddCategory(new CategoryBinding
+            var response = await _categoryService.AddCategory(new Shared.Models.Binding.CategoryModels.CategoryBinding
             {
                Name = TestString,
                Description = TestString,

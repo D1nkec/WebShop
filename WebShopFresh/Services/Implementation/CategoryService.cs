@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using WebShopFresh.Data;
-using WebShopFresh.Models.Dbo;
+using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Services.Interface;
-using WebShopFresh.Shared.Models.Binding;
-using WebShopFresh.Shared.Models.ViewModel;
+using WebShopFresh.Shared.Models.Binding.CategoryModels;
+using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 
 namespace WebShopFresh.Services.Implementation
 {

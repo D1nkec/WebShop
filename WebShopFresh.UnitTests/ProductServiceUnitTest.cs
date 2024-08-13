@@ -27,7 +27,7 @@ namespace WebShopFresh.UnitTests
         [Fact] 
         public async void AddProductItem_AddsNewEntityToDb_ReturnsViewModel()
         {
-            var response = await _productService.AddProduct(new ProductBinding
+            var response = await _productService.AddProduct(new Shared.Models.Binding.ProductModels.ProductBinding
             {
                Description = TestString,
                Name = TestString,

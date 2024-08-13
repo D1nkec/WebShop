@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
+using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Shared.Interfaces;
-using WebShopFresh.Shared.Models.Base;
+using WebShopFresh.Shared.Models.Base.ProductModels;
 
-namespace WebShopFresh.Models.Dbo
+namespace WebShopFresh.Models.Dbo.ProductModels
 {
     public class Product : ProductBase, IBaseTableAtributes
     {
@@ -13,9 +14,9 @@ namespace WebShopFresh.Models.Dbo
         public Category? Category { get; set; }
         public long? CategoryId { get; set; }
 
-        public DateTime Created { get; set ; }
-        public DateTime Updated { get ; set; }
-        public bool Valid { get; set ; }
+        public DateTime Created { get; set; }
+        public DateTime Updated { get; set; }
+        public bool Valid { get; set; }
 
         [ValidateNever]
         public string? ImageUrl { get; set; }

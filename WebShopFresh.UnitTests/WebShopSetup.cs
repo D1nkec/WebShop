@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using WebShopFresh.Data;
 using WebShopFresh.Mapping;
-using WebShopFresh.Models.Dbo;
+using WebShopFresh.Models.Dbo.CategoryModels;
+using WebShopFresh.Models.Dbo.ProductModels;
 using WebShopFresh.Services.Implementation;
 using WebShopFresh.Services.Interface;
 

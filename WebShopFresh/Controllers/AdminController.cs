@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebShopFresh.Services.Interface;
-using WebShopFresh.Shared.Models.Binding;
 using System.Threading.Tasks;
+using WebShopFresh.Shared.Models.Binding.CategoryModels;
+using WebShopFresh.Shared.Models.Binding.ProductModels;
 
 namespace WebShopFresh.Controllers
 {

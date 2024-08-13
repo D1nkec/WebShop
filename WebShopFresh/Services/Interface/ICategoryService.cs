@@ -1,5 +1,5 @@
-﻿using WebShopFresh.Shared.Models.Binding;
-using WebShopFresh.Shared.Models.ViewModel;
+﻿using WebShopFresh.Shared.Models.Binding.CategoryModels;
+using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 
 namespace WebShopFresh.Services.Interface
 {

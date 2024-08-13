@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebShopFresh.Shared.Models.Base
+namespace WebShopFresh.Shared.Models.Base.ProductModels
 {
     public abstract class ProductBase
     {

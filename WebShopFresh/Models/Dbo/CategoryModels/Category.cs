@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebShopFresh.Models.Dbo.ProductModels;
 using WebShopFresh.Shared.Interfaces;
-using WebShopFresh.Shared.Models.Base;
+using WebShopFresh.Shared.Models.Base.CategoryModels;
 
-namespace WebShopFresh.Models.Dbo
+namespace WebShopFresh.Models.Dbo.CategoryModels
 {
     public class Category : CategoryBase, IBaseTableAtributes
     {
@@ -11,7 +12,7 @@ namespace WebShopFresh.Models.Dbo
 
         public ICollection<Product>? Products { get; set; }
 
-        public DateTime Created { get; set; } 
+        public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public bool Valid { get; set; }
     }
