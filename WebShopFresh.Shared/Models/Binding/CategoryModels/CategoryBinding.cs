@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebShopFresh.Shared.Models.Base.CategoryModels;
+﻿using WebShopFresh.Shared.Models.Base.CategoryModels;
+
+
+
 
 namespace WebShopFresh.Shared.Models.Binding.CategoryModels
 {

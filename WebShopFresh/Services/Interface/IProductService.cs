@@ -1,7 +1,8 @@
-﻿using WebShopFresh.Models.Dbo;
-using WebShopFresh.Shared.Models.Binding.ProductModels;
+﻿using WebShopFresh.Shared.Models.Binding.ProductModels;
 using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
+
+
 
 namespace WebShopFresh.Services.Interface
 {
@@ -12,8 +13,6 @@ namespace WebShopFresh.Services.Interface
         Task<ProductViewModel> AddProduct(ProductBinding model);
         Task<ProductViewModel> UpdateProduct(ProductUpdateBinding model);
         Task<ProductViewModel> DeleteProduct(long id);
-
-        
     }
 }
 

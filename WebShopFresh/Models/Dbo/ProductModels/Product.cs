@@ -4,6 +4,8 @@ using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Shared.Interfaces;
 using WebShopFresh.Shared.Models.Base.ProductModels;
 
+
+
 namespace WebShopFresh.Models.Dbo.ProductModels
 {
     public class Product : ProductBase, IBaseTableAtributes
@@ -13,7 +15,6 @@ namespace WebShopFresh.Models.Dbo.ProductModels
 
         public Category? Category { get; set; }
         public long? CategoryId { get; set; }
-
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public bool Valid { get; set; }

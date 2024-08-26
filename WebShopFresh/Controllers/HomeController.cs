@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using WebShopFresh.Models;
 using WebShopFresh.Services.Interface;
-using Microsoft.AspNetCore.Identity;
+
+
 
 namespace WebShopFresh.Controllers
 {
@@ -13,14 +13,13 @@ namespace WebShopFresh.Controllers
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         
-       
         public HomeController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService)
         {
             _logger = logger;
             _productService = productService;
-            _categoryService = categoryService;
-           
+            _categoryService = categoryService; 
         }
+
 
 
         public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
@@ -32,8 +31,6 @@ namespace WebShopFresh.Controllers
             ViewBag.Categories = categories;
             return View(products);
         }
-
-
 
 
 

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
+
 
 namespace WebShopFresh.Shared.Models.Base.ProductModels
 {
@@ -19,6 +16,7 @@ namespace WebShopFresh.Shared.Models.Base.ProductModels
         [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Price { get; set; }
+
         [Required]
         [Column(TypeName = "decimal(9,2)")]
         public decimal Quantity { get; set; }

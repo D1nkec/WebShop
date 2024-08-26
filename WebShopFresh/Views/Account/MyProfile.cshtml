@@ -1,0 +1,57 @@
+﻿@model WebShopFresh.Shared.Models.ViewModel.UserModel.ApplicationUserUpdateBinding
+
+@{
+    ViewData["Title"] = "My Profile";
+}
+
+<!-- Main title -->
+<h1 class="mb-4 mt-4">My Profile</h1>
+
+<!-- Horizontal rule for separation -->
+<hr />
+
+<!-- Main container for the profile form -->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <!-- Form for updating profile -->
+            <form asp-action="MyProfile">
+                <!-- Validation summary -->
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <!-- Hidden input for user ID -->
+                <input asp-for="Id" type="hidden" />
+
+                <!-- Form group for first name -->
+                <div class="form-group mb-3">
+                    <label asp-for="FirstName" class="form-label"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger"></span>
+                </div>
+
+                <!-- Form group for last name -->
+                <div class="form-group mb-3">
+                    <label asp-for="LastName" class="form-label"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger"></span>
+                </div>
+
+                <!-- Form group for address -->
+                <div class="form-group mb-4">
+                    <label asp-for="Address" class="form-label"></label>
+                    <input asp-for="Address" class="form-control" />
+                    <span asp-validation-for="Address" class="text-danger"></span>
+                </div>
+
+                <!-- Container for buttons -->
+                <div class="d-flex justify-content-between btn-container mb-4">
+                    <!-- Submit button -->
+                    <input type="submit" value="Save" class="btn btn-primary" />
+
+                    <!-- Back button -->
+                    <a asp-controller="Home" asp-action="Products" class="btn btn-secondary">Back</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

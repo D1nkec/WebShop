@@ -1,6 +1,4 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.CodeAnalysis.Elfie.Serialization;
 using Microsoft.EntityFrameworkCore;
 using WebShopFresh.Data;
 using WebShopFresh.Models.Dbo.ProductModels;
@@ -8,6 +6,8 @@ using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
 using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
+
+
 
 namespace WebShopFresh.Services.Implementation
 {
@@ -109,7 +109,6 @@ namespace WebShopFresh.Services.Implementation
 
 
 
-
         /// <summary>
         /// UPDATE PRODUCT
         /// </summary>
@@ -142,8 +141,6 @@ namespace WebShopFresh.Services.Implementation
 
             return _mapper.Map<ProductViewModel>(dbo);
         }
-
-
 
     }
 }

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
+
 
 namespace WebShopFresh.Shared.Models.ViewModel.UserModel
 {
@@ -11,16 +8,13 @@ namespace WebShopFresh.Shared.Models.ViewModel.UserModel
     {
         public string Id { get; set; }
 
-
-        [Display(Name = "Ime")]
+        [Display(Name = "Name")]
         public string FirstName { get; set; }
 
-
-        [Display(Name = "Prezime")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
         public DateTime? RegistrationDate { get; set; }
-
         public string? Address { get; set; }
     }
 }

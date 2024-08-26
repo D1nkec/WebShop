@@ -2,6 +2,8 @@
 using WebShopFresh.Shared.Models.Binding.AccountBinding;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
+
+
 namespace WebShopFresh.Services.Interface
 {
     public interface IAccountService

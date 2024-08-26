@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
+
+
 
 namespace WebShopFresh.Shared.Models.Base.OrderModels
+
 {
     public class OrderBase
     {
-        [Display(Name ="Poruka")]
+        [Display(Name ="Message")]
         public string? Message { get; set; }
     }
 }

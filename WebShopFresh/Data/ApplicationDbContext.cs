@@ -7,6 +7,7 @@ using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Shared.Interfaces;
 
 
+
 namespace WebShopFresh.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
@@ -143,7 +144,7 @@ namespace WebShopFresh.Data
         Description = "Popular action figure toy",
         Price = 30,
         CategoryId = 6,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "/content/action-figure-496wpt-1.jpg"
     },
     new Product
     {
@@ -154,7 +155,7 @@ namespace WebShopFresh.Data
         Description = "High-performance laptop for work and play",
         Price = 1200,
         CategoryId = 2,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "/content/laptop.jpg"
     },
     new Product
     {
@@ -187,7 +188,7 @@ namespace WebShopFresh.Data
         Description = "Multi-functional kitchen blender",
         Price = 80,
         CategoryId = 5,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "/content/blender.jpg"
     },
     new Product
     {
@@ -198,11 +199,10 @@ namespace WebShopFresh.Data
         Description = "Creative building blocks for children",
         Price = 40,
         CategoryId = 6,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "/content/BuildingBlocks.jpg"
     }
               );
         }
-
 
 
 
@@ -271,16 +271,11 @@ namespace WebShopFresh.Data
 
 
 
-
-
-
-
         /// <summary>
         /// DB SET
         /// </summary>
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
-
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
 

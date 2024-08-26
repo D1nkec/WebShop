@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore.Metadata;
+
+
 
 namespace WebShopFresh.Models.Dbo.UserModel
 {
@@ -7,9 +8,8 @@ namespace WebShopFresh.Models.Dbo.UserModel
     {
         public string FirstName { get; set; }
         public string  LastName { get; set; }
-
-        public string Adress { get; set; }
-
+        public string? Address { get; set; }
         public DateTime? RegistrationDate { get; set; }
+
     }
 }

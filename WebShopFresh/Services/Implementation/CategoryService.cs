@@ -19,6 +19,8 @@ namespace WebShopFresh.Services.Implementation
             _mapper = mapper;
         }
 
+
+
         /// <summary>
         /// ADD CATEGORY
         /// </summary>
@@ -98,7 +100,6 @@ namespace WebShopFresh.Services.Implementation
 
             return _mapper.Map<CategoryViewModel>(dbo);
         }
-
 
     }
 }

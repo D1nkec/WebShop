@@ -11,6 +11,8 @@ using WebShopFresh.Shared.Models.ViewModel.OrderModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
+
+
 namespace WebShopFresh.Mapping
 {
     public class MappingProfile : Profile
@@ -36,7 +38,6 @@ namespace WebShopFresh.Mapping
             CreateMap<OrderItemBinding, OrderItem>();
             CreateMap<OrderItemUpdateBinding, OrderItem>();
             CreateMap<OrderItem, OrderItemViewModel>();
-
 
             // APPLICATION USER
             CreateMap<ApplicationUserUpdateBinding, ApplicationUser>();

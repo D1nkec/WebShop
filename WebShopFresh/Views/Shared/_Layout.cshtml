@@ -1,54 +1,93 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using WebShopFresh.Models.Dbo.UserModel
+@using WebShopFresh.Shared.Models.Dto
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    string role = string.Empty;
+
+    if (User != null && SignInManager.IsSignedIn(User))
+    {
+        var applicationUser = await UserManager.GetUserAsync(User);
+        if (applicationUser != null)
+        {
+            var roles = await UserManager.GetRolesAsync(applicationUser);
+            if (roles != null && roles.Count > 0)
+            {
+                role = roles[0];
+            }
+        }
+    }
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - WebShopFresh</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
-
+    <title>@ViewData["Title"] - WebShop</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/WebshopFresh.styles.css" asp-append-version="true" />
 </head>
+
 <body>
     <header>
-        <nav class="navbar navbar-expand-lg bg-dark" data-bs-theme="dark">
+        <nav class="navbar navbar-expand-lg navbar-custom">
             <div class="container-fluid">
-                <a class="navbar-brand keychainify-checked" href="#">Logo coming soon...</a>
+                <a class="navbar-brand" href="@Url.Action("Products", "Home")">WebShop</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
                 <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Products">Products</a>
-                        </li>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        @switch (role)
+                        {
+                            case Roles.Admin:
+                                <li class="nav-item">
+                                    <a class="nav-link active" asp-controller="Admin" asp-action="Products">Products</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Admin" asp-action="Categories">Categories</a>
+                                </li>
+                                break;
 
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Products">Products</a>
-                        </li>
+                            case Roles.Buyer:
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Order" asp-action="Order">
+                                        <i class="fa fa-shopping-cart"></i> Cart
+                                    </a>
+                                </li>
+                                break;
 
-                        <li class="nav-item">
-                            <a class="nav-link text-warning" asp-area="" asp-controller="Admin" asp-action="Categories">Categories</a>
-                        </li>
+                            default:
+                                break;
+                        }
+                    </ul>
+                    <ul class="navbar-nav ms-auto">
+                        <partial name="_LoginPartial" />
                     </ul>
                 </div>
             </div>
         </nav>
-  
-
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
-    </div>
 
+    <div class="wrapper">
+        <div class="container main-content">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
     <footer class="border-top footer text-muted">
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 text-center text-lg-left">
-                    &copy; 2024 - <strong>WebShop</strong>
+                    &copy; 2024 - <strong>DinoShop</strong> - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                 </div>
                 <div class="col-lg-6 text-center text-lg-right mt-2 mt-lg-0">
                     Follow us:
@@ -66,3 +105,4 @@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

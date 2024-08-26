@@ -1,0 +1,79 @@
+﻿@using WebShopFresh.Services.Interface
+@inject IOrderService orderService
+@model WebShopFresh.Shared.Models.Binding.OrderModels.OrderBinding
+
+
+@{
+    ViewData["Title"] = "Order";
+    var productItems = await orderService.GetProductItems(Model.OrderItems.Select(y => y.ProductId.Value).ToList());
+    var rowCounter = 1;
+}
+
+<h1>Košarica</h1>
+
+@if (Model.OrderItems.Count == 0)
+{
+    <div class="container text-center mt-5">
+       
+        <div class="alert alert-info mb-4" role="alert">
+            Your Cart is empty! Continue shopping.
+        </div>
+
+       
+        <a class="btn btn-primary mt-3" asp-area="Products" asp-controller="Home" asp-action="Products">
+            Start Shopping
+        </a>
+    </div>
+}
+
+else
+{
+    <form asp-action="Order" method="post">
+        <h4>Delivery Address</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label asp-for="OrderAddress" class="control-label"></label>
+                    <input asp-for="OrderAddress" class="form-control" />
+                </div>
+              
+            </div>
+        </div>
+
+        <h4>Selected Products</h4>
+        <hr />
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Naziv</th>
+                    <th>Quantity</th>
+                    <th>Remove</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrderItems.Count; i++)
+                {
+                    var productItem = productItems.FirstOrDefault(y => y.Id == Model.OrderItems[i].ProductId);
+                    <tr>
+                        <td>@rowCounter</td>
+                        <td>@productItem.Name</td>
+                        <td>
+                            <input type="text" name="OrderItems[@i].Quantity" value="@Model.OrderItems[i].Quantity" min="1" class="form-control" />
+                            <input type="hidden" name="OrderItems[@i].ProductItemId" value="@Model.OrderItems[i].ProductId" />
+                        </td>
+                        <td>
+                            <input type="checkbox" name="OrderItems[@i].Remove" value="true" />
+                        </td>
+                    </tr>
+                    rowCounter++;
+                }
+            </tbody>
+        </table>
+
+        <div class="form-group">
+            <input type="submit" value="Naruci" class="btn btn-primary" />
+        </div>
+    </form>
+}

@@ -8,6 +8,9 @@ using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.AccountBinding;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
+
+
+
 namespace WebShopFresh.Services.Implementation
 {
     public class AccountService : IAccountService
@@ -25,6 +28,8 @@ namespace WebShopFresh.Services.Implementation
             _mapper = mapper;
         }
 
+
+
         /// <summary>
         /// UPDATE USER PROFILE
         /// </summary>
@@ -32,11 +37,13 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<ApplicationUserViewModel> UpdateUserProfileAsync(ApplicationUserUpdateBinding model)
         {
-            var appUser = await _context.Users.Include(x => x.Adress).FirstOrDefaultAsync(y => y.Id == model.Id);
+            var appUser = await _context.Users.FirstOrDefaultAsync(y => y.Id == model.Id);
             _mapper.Map(model, appUser);
             await _context.SaveChangesAsync();
             return _mapper.Map<ApplicationUserViewModel>(appUser);
         }
+
+
 
         /// <summary>
         /// GET CURRENT USER PROFILE
@@ -47,10 +54,10 @@ namespace WebShopFresh.Services.Implementation
         {
 
             var dbo = await _context.Users
-                .Include(y => y.Adress)
                 .FirstOrDefaultAsync(y => y.Id == _userManager.GetUserId(user));
             return _mapper.Map<ApplicationUserViewModel>(dbo);
         }
+
 
 
         /// <summary>
@@ -61,9 +68,7 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<T> GetUserProfileAsync<T>(ClaimsPrincipal user)
         {
-
             var dbo = await _context.Users
-                .Include(y => y.Adress)
                 .FirstOrDefaultAsync(y => y.Id == _userManager.GetUserId(user));
             return _mapper.Map<T>(dbo);
         }
@@ -112,5 +117,6 @@ namespace WebShopFresh.Services.Implementation
             var newUsers = await _context.Users.Where(y => y.RegistrationDate > notBefore).ToListAsync();
             return newUsers.Select(y => _mapper.Map<ApplicationUserViewModel>(y)).ToList();
         }
+
     }
 }

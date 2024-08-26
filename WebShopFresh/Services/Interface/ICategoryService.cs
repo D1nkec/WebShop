@@ -1,6 +1,8 @@
 ﻿using WebShopFresh.Shared.Models.Binding.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 
+
+
 namespace WebShopFresh.Services.Interface
 {
     public interface ICategoryService

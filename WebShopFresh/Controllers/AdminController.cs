@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using WebShopFresh.Services.Interface;
-using System.Threading.Tasks;
 using WebShopFresh.Shared.Models.Binding.CategoryModels;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
+using Microsoft.AspNetCore.Authorization;
+
+
 
 namespace WebShopFresh.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
-       
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
@@ -19,9 +21,7 @@ namespace WebShopFresh.Controllers
             _productService = productService;
             _categoryService = categoryService;
             _mapper = mapper;
-          
         }
-
 
 
 
@@ -33,7 +33,6 @@ namespace WebShopFresh.Controllers
             var product = await _productService.GetProduct(id);
             return View(product);
         }
-
 
 
 
@@ -51,6 +50,7 @@ namespace WebShopFresh.Controllers
         }
 
 
+
         /// <summary>
         /// Displays a list of categories.
         /// </summary>
@@ -62,7 +62,6 @@ namespace WebShopFresh.Controllers
 
 
 
-
         /// <summary>
         /// Displays a form to create a new product.
         /// </summary>
@@ -70,7 +69,6 @@ namespace WebShopFresh.Controllers
         {
             return View();
         }
-
 
 
 
@@ -86,7 +84,6 @@ namespace WebShopFresh.Controllers
 
 
 
-
         /// <summary>
         /// Displays a form to edit an existing product.
         /// </summary>
@@ -99,7 +96,6 @@ namespace WebShopFresh.Controllers
 
 
 
-
         /// <summary>
         /// Handles the submission of the product edit form.
         /// </summary>
@@ -109,7 +105,6 @@ namespace WebShopFresh.Controllers
             await _productService.UpdateProduct(model);
             return RedirectToAction("Products");
         }
-
 
 
 
@@ -132,7 +127,6 @@ namespace WebShopFresh.Controllers
             await _categoryService.AddCategory(model);
             return RedirectToAction("Categories");
         }
-
 
 
 
@@ -159,7 +153,6 @@ namespace WebShopFresh.Controllers
 
 
 
-
         /// <summary>
         /// Handles the submission of the category edit form.
         /// </summary>
@@ -169,7 +162,6 @@ namespace WebShopFresh.Controllers
             await _categoryService.UpdateCategory(model);
             return RedirectToAction("Categories");
         }
-
 
 
 
@@ -184,7 +176,6 @@ namespace WebShopFresh.Controllers
 
 
 
-
         /// <summary>
         /// Deletes a category.
         /// </summary>
@@ -193,7 +184,6 @@ namespace WebShopFresh.Controllers
             await _categoryService.DeleteCategory(id);
             return RedirectToAction("Categories");
         }
-
 
 
     }

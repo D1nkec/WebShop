@@ -1,0 +1,40 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using WebShopFresh.Models.Dbo.UserModel
+@using WebShopFresh.Services.Interface
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IAccountService accountService
+
+
+<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var applicationUser = await accountService.GetUserProfileAsync(User);
+        if (applicationUser != null)
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-controller="Account" asp-action="MyProfile">Hi, @applicationUser.FirstName</a>
+            </li>
+            <li class="nav-item">
+                <form class="d-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Products", "Home")">
+                    <button type="submit" class="btn btn-link text-danger">Logout</button>
+                </form>
+            </li>
+        }
+        else
+        {
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            </li>
+        }
+    }
+    else
+    {                                 
+        <li class="nav-item">
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>
+        </li>
+    }
+</ul>

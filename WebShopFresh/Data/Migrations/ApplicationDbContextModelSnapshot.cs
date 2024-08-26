@@ -22,6 +22,143 @@ namespace WebShopFresh.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(128)
+                        .HasColumnType("nvarchar(128)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
             modelBuilder.Entity("WebShopFresh.Models.Dbo.CategoryModels.Category", b =>
                 {
                     b.Property<long>("Id")
@@ -55,7 +192,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 1L,
-                            Created = new DateTime(2024, 7, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7791),
+                            Created = new DateTime(2024, 8, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(286),
                             Description = "Test description",
                             Name = "Test kategorija",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -64,7 +201,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 2L,
-                            Created = new DateTime(2024, 7, 14, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7835),
+                            Created = new DateTime(2024, 8, 14, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(344),
                             Description = "Electronic devices and accessories",
                             Name = "Electronics",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -73,7 +210,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 3L,
-                            Created = new DateTime(2024, 5, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7840),
+                            Created = new DateTime(2024, 6, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(348),
                             Description = "Books of various genres",
                             Name = "Books",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -82,7 +219,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 4L,
-                            Created = new DateTime(2024, 6, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7846),
+                            Created = new DateTime(2024, 7, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(354),
                             Description = "Men's, Women's, and Children's clothing",
                             Name = "Clothing",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -91,7 +228,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 5L,
-                            Created = new DateTime(2023, 7, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7849),
+                            Created = new DateTime(2023, 8, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(357),
                             Description = "Appliances and gadgets for home use",
                             Name = "Home Appliances",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -100,7 +237,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 6L,
-                            Created = new DateTime(2024, 6, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(7853),
+                            Created = new DateTime(2024, 7, 25, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(362),
                             Description = "Toys for children of all ages",
                             Name = "Toys",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -115,6 +252,9 @@ namespace WebShopFresh.Migrations
                         .HasColumnType("bigint");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("BuyerId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Created")
                         .HasColumnType("datetime2");
@@ -135,6 +275,8 @@ namespace WebShopFresh.Migrations
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
 
                     b.ToTable("Orders");
                 });
@@ -226,7 +368,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 1L,
                             CategoryId = 2L,
-                            Created = new DateTime(2024, 7, 19, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8035),
+                            Created = new DateTime(2024, 8, 19, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(628),
                             Description = "Latest model smartphone with high-end features",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Smartphone",
@@ -239,7 +381,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 2L,
                             CategoryId = 3L,
-                            Created = new DateTime(2024, 5, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8044),
+                            Created = new DateTime(2024, 6, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(642),
                             Description = "A captivating science fiction novel",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Science Fiction Novel",
@@ -252,7 +394,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 3L,
                             CategoryId = 4L,
-                            Created = new DateTime(2024, 6, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8049),
+                            Created = new DateTime(2024, 7, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(645),
                             Description = "Comfortable cotton t-shirt",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Men's T-Shirt",
@@ -265,7 +407,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 4L,
                             CategoryId = 5L,
-                            Created = new DateTime(2023, 7, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8053),
+                            Created = new DateTime(2023, 8, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(648),
                             Description = "High-efficiency vacuum cleaner",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Vacuum Cleaner",
@@ -278,7 +420,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 5L,
                             CategoryId = 1L,
-                            Created = new DateTime(2024, 7, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8058),
+                            Created = new DateTime(2024, 8, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(651),
                             Description = "neki description",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "TEST",
@@ -291,9 +433,9 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 6L,
                             CategoryId = 6L,
-                            Created = new DateTime(2024, 7, 14, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8062),
+                            Created = new DateTime(2024, 8, 14, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(654),
                             Description = "Popular action figure toy",
-                            ImageUrl = "/content/test-sku.jpg",
+                            ImageUrl = "/content/action-figure-496wpt-1.jpg",
                             Name = "Action Figure",
                             Price = 30m,
                             Quantity = 0m,
@@ -304,9 +446,9 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 7L,
                             CategoryId = 2L,
-                            Created = new DateTime(2024, 7, 4, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8067),
+                            Created = new DateTime(2024, 8, 4, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(657),
                             Description = "High-performance laptop for work and play",
-                            ImageUrl = "/content/test-sku.jpg",
+                            ImageUrl = "/content/laptop.jpg",
                             Name = "Laptop",
                             Price = 1200m,
                             Quantity = 0m,
@@ -317,7 +459,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 8L,
                             CategoryId = 3L,
-                            Created = new DateTime(2024, 4, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8071),
+                            Created = new DateTime(2024, 5, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(660),
                             Description = "An intriguing mystery thriller novel",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Mystery Thriller",
@@ -330,7 +472,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 9L,
                             CategoryId = 4L,
-                            Created = new DateTime(2024, 5, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8076),
+                            Created = new DateTime(2024, 6, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(663),
                             Description = "Stylish and comfortable women's jeans",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Women's Jeans",
@@ -343,9 +485,9 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 10L,
                             CategoryId = 5L,
-                            Created = new DateTime(2022, 7, 24, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8080),
+                            Created = new DateTime(2022, 8, 24, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(666),
                             Description = "Multi-functional kitchen blender",
-                            ImageUrl = "/content/test-sku.jpg",
+                            ImageUrl = "/content/blender.jpg",
                             Name = "Blender",
                             Price = 80m,
                             Quantity = 0m,
@@ -356,15 +498,154 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 11L,
                             CategoryId = 6L,
-                            Created = new DateTime(2024, 7, 9, 2, 33, 23, 776, DateTimeKind.Local).AddTicks(8085),
+                            Created = new DateTime(2024, 8, 9, 16, 25, 8, 5, DateTimeKind.Local).AddTicks(669),
                             Description = "Creative building blocks for children",
-                            ImageUrl = "/content/test-sku.jpg",
+                            ImageUrl = "/content/BuildingBlocks.jpg",
                             Name = "Building Blocks",
                             Price = 40m,
                             Quantity = 0m,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Valid = true
                         });
+                });
+
+            modelBuilder.Entity("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("RegistrationDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebShopFresh.Models.Dbo.OrderModels.Order", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId");
+
+                    b.Navigation("Buyer");
                 });
 
             modelBuilder.Entity("WebShopFresh.Models.Dbo.OrderModels.OrderItem", b =>

@@ -1,48 +1,71 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-
-a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
-}
-
-a {
-  color: #0077cc;
+﻿a {
+    color: #0077cc;
 }
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: rgba(0, 0, 0, .05);
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #ff0000;
+    background-color: #ff0000;
+    border-color: #1861ac;
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
-}
-.border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 
+
+
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
+
+/* Custom Navbar Styles */
+.navbar-custom {
+    background-color: #ffffff; /* Background color for the navbar */
+    color: #000000; /* Text color for better contrast */
+    padding: 0.5rem 1rem; /* Adjust padding for better spacing */
+    font-weight: bold; /* Make all text in the navbar bold */
+}
+
+    .navbar-custom .navbar-brand,
+    .navbar-custom .navbar-nav .nav-link {
+        color: #000000; /* Text color for the brand and links */
+        font-weight: bold; /* Ensure text is bold for brand and links */
+    }
+
+        /* Hover color for Navbar Links */
+        .navbar-custom .navbar-nav .nav-link:hover {
+            color: #ffdd57; /* Yellow color on hover */
+        }
+
+    /* Style for the Logout Button in Navbar */
+    .navbar-custom .btn-link {
+        color: #000000; /* White color for the Logout button */
+        font-weight: bold; /* Ensure text is bold for the Logout button */
+    }
+
+        /* Hover color for the Logout Button */
+        .navbar-custom .btn-link:hover {
+            color: #ffdd57; /* Yellow color on hover */
+        }
+
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    background-color: black;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
 }

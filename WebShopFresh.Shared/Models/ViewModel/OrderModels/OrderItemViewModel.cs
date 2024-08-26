@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebShopFresh.Shared.Models.Base.OrderModels;
+﻿using WebShopFresh.Shared.Models.Base.OrderModels;
+
+
 
 namespace WebShopFresh.Shared.Models.ViewModel.OrderModels
 {
