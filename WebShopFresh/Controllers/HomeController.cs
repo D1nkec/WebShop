@@ -33,11 +33,10 @@ namespace WebShopFresh.Controllers
         }
 
 
-
         public async Task<IActionResult> Product(long id)
         {
             var product = await _productService.GetProduct(id);
-            return View(product);
+            return PartialView("_ProductPartial", product);
         }
 
 

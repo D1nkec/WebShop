@@ -372,3 +372,31 @@ h1 {
     border-color: #545b62; /* Darker border color on hover */
 }
 
+
+
+
+
+
+
+
+/* MODAL */
+
+
+.modal-content {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-header {
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.modal-body img {
+    max-height: 400px;
+    object-fit: cover;
+}
+
+.modal-footer {
+    border-top: 1px solid #dee2e6;
+}
