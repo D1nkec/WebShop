@@ -24,14 +24,14 @@
         else
         {
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
             </li>
         }
     }
     else
-    {                                 
+    {
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login </a>
+            <a class="nav-link" asp-controller="Account" asp-action="Login">Login</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" asp-controller="Account" asp-action="Register">Register</a>

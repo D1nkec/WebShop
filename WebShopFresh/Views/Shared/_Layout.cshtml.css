@@ -30,35 +30,6 @@ button.accept-policy {
 }
 
 
-/* Custom Navbar Styles */
-.navbar-custom {
-    background-color: #ffffff; /* Background color for the navbar */
-    color: #000000; /* Text color for better contrast */
-    padding: 0.5rem 1rem; /* Adjust padding for better spacing */
-    font-weight: bold; /* Make all text in the navbar bold */
-}
-
-    .navbar-custom .navbar-brand,
-    .navbar-custom .navbar-nav .nav-link {
-        color: #000000; /* Text color for the brand and links */
-        font-weight: bold; /* Ensure text is bold for brand and links */
-    }
-
-        /* Hover color for Navbar Links */
-        .navbar-custom .navbar-nav .nav-link:hover {
-            color: #ffdd57; /* Yellow color on hover */
-        }
-
-    /* Style for the Logout Button in Navbar */
-    .navbar-custom .btn-link {
-        color: #000000; /* White color for the Logout button */
-        font-weight: bold; /* Ensure text is bold for the Logout button */
-    }
-
-        /* Hover color for the Logout Button */
-        .navbar-custom .btn-link:hover {
-            color: #ffdd57; /* Yellow color on hover */
-        }
 
 
 .footer {
@@ -69,3 +40,4 @@ button.accept-policy {
     white-space: nowrap;
     line-height: 60px;
 }
+  

@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.CategoryModels;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
+using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
+using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 using Microsoft.AspNetCore.Authorization;
-
-
+using WebShopFresh.Shared.Models.Dto;
 
 namespace WebShopFresh.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = Roles.Admin)]
     public class AdminController : Controller
     {
         private readonly IProductService _productService;
@@ -23,8 +25,6 @@ namespace WebShopFresh.Controllers
             _mapper = mapper;
         }
 
-
-
         /// <summary>
         /// Displays details of a specific product.
         /// </summary>
@@ -33,8 +33,6 @@ namespace WebShopFresh.Controllers
             var product = await _productService.GetProduct(id);
             return View(product);
         }
-
-
 
         /// <summary>
         /// Displays a list of products.
@@ -49,7 +47,86 @@ namespace WebShopFresh.Controllers
             return View(products);
         }
 
+        /// <summary>
+        /// Displays a form to create a new product.
+        /// </summary>
+        public async Task<IActionResult> CreateProduct()
+        {
+            // Get all categories for dropdown
+            var categories = await _categoryService.GetCategories(valid: true);
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
 
+            return View(new ProductBinding());
+        }
+
+        /// <summary>
+        /// Handles the submission of the new product form.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> CreateProduct(ProductBinding model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _productService.AddProduct(model);
+                return RedirectToAction("Products");
+            }
+
+            // If model is not valid, repopulate categories for dropdown
+            var categories = await _categoryService.GetCategories(valid: true);
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            return View(model);
+        }
+
+        /// <summary>
+        /// Displays a form to edit an existing product.
+        /// </summary>
+        public async Task<IActionResult> EditProduct(long id)
+        {
+            var model = await _productService.GetProduct(id);
+            var response = _mapper.Map<ProductUpdateBinding>(model);
+
+            // Populate categories for dropdown
+            var categories = await _categoryService.GetCategories(valid: true);
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            return View(response);
+        }
+
+        /// <summary>
+        /// Handles the submission of the product edit form.
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> EditProduct(ProductUpdateBinding model)
+        {
+            if (ModelState.IsValid)
+            {
+                await _productService.UpdateProduct(model);
+                return RedirectToAction("Products");
+            }
+
+            // If model is not valid, repopulate categories for dropdown
+            var categories = await _categoryService.GetCategories(valid: true);
+            ViewBag.Categories = categories.Select(c => new SelectListItem
+            {
+                Value = c.Id.ToString(),
+                Text = c.Name
+            }).ToList();
+
+            return View(model);
+        }
 
         /// <summary>
         /// Displays a list of categories.
@@ -59,55 +136,6 @@ namespace WebShopFresh.Controllers
             var categories = await _categoryService.GetCategories(valid);
             return View(categories);
         }
-
-
-
-        /// <summary>
-        /// Displays a form to create a new product.
-        /// </summary>
-        public IActionResult CreateProduct()
-        {
-            return View();
-        }
-
-
-
-        /// <summary>
-        /// Handles the submission of the new product form.
-        /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> CreateProduct(ProductBinding model)
-        {
-            await _productService.AddProduct(model);
-            return RedirectToAction("Products");
-        }
-
-
-
-        /// <summary>
-        /// Displays a form to edit an existing product.
-        /// </summary>
-        public async Task<IActionResult> EditProduct(long id)
-        {
-            var model = await _productService.GetProduct(id);
-            var response = _mapper.Map<ProductUpdateBinding>(model);
-            return View(response);
-        }
-
-
-
-        /// <summary>
-        /// Handles the submission of the product edit form.
-        /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> EditProduct(ProductUpdateBinding model)
-        {
-            await _productService.UpdateProduct(model);
-            return RedirectToAction("Products");
-        }
-
-
-
         /// <summary>
         /// Displays a form to create a new category.
         /// </summary>
@@ -116,19 +144,20 @@ namespace WebShopFresh.Controllers
             return View();
         }
 
-
-
         /// <summary>
         /// Handles the submission of the new category form.
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> CreateCategory(CategoryBinding model)
         {
-            await _categoryService.AddCategory(model);
-            return RedirectToAction("Categories");
+            if (ModelState.IsValid)
+            {
+                await _categoryService.AddCategory(model);
+                return RedirectToAction("Categories");
+            }
+
+            return View(model);
         }
-
-
 
         /// <summary>
         /// Displays details of a specific category.
@@ -138,8 +167,6 @@ namespace WebShopFresh.Controllers
             var category = await _categoryService.GetCategory(id);
             return View(category);
         }
-
-
 
         /// <summary>
         /// Displays a form to edit an existing category.
@@ -151,19 +178,20 @@ namespace WebShopFresh.Controllers
             return View(response);
         }
 
-
-
         /// <summary>
         /// Handles the submission of the category edit form.
         /// </summary>
         [HttpPost]
         public async Task<IActionResult> EditCategory(CategoryUpdateBinding model)
         {
-            await _categoryService.UpdateCategory(model);
-            return RedirectToAction("Categories");
+            if (ModelState.IsValid)
+            {
+                await _categoryService.UpdateCategory(model);
+                return RedirectToAction("Categories");
+            }
+
+            return View(model);
         }
-
-
 
         /// <summary>
         /// Deletes a product.
@@ -174,8 +202,6 @@ namespace WebShopFresh.Controllers
             return RedirectToAction("Products");
         }
 
-
-
         /// <summary>
         /// Deletes a category.
         /// </summary>
@@ -184,7 +210,5 @@ namespace WebShopFresh.Controllers
             await _categoryService.DeleteCategory(id);
             return RedirectToAction("Categories");
         }
-
-
     }
 }

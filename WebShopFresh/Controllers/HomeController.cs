@@ -29,6 +29,9 @@ namespace WebShopFresh.Controllers
 
             // Pass filtered and sorted products to the view
             ViewBag.Categories = categories;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentFilter"] = searchString;
+
             return View(products);
         }
 

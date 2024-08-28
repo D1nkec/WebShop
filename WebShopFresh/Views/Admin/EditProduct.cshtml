@@ -2,10 +2,10 @@
 @model ProductUpdateBinding
 
 @{
-    ViewData["Title"] = "EditProduct";
+    ViewData["Title"] = "Edit Product";
 }
 
-<h1>EditProduct</h1>
+<h1>Edit Product</h1>
 
 <div class="card mb-3 col-md-6 mx-auto mt-4">
     <h3 class="card-header">@ViewData["Title"]</h3>
@@ -33,11 +33,21 @@
                 <input asp-for="Quantity" class="form-control" />
                 <span asp-validation-for="Quantity" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="ImageUrl" class="control-label"></label>
+                <input asp-for="ImageUrl" class="form-control" />
+                <span asp-validation-for="ImageUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CategoryId" class="control-label">Category</label>
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.Categories"></select>
+                <span asp-validation-for="CategoryId" class="text-danger"></span>
+            </div>
             <div class="card-footer">
                 <button type="submit" class="btn btn-primary">Submit</button>
                 <a asp-action="Products" class="btn btn-info">Back to list</a>
-
             </div>
+           
         </form>
     </div>
 </div>

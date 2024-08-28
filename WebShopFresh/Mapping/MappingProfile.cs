@@ -25,7 +25,7 @@ namespace WebShopFresh.Mapping
             CreateMap<ProductBinding, Product>();
             CreateMap<ProductUpdateBinding, Product>();
 
-           // CATEGORY
+            // CATEGORY
             CreateMap<Category, CategoryViewModel>();
             CreateMap<CategoryBinding, Category>();
             CreateMap<CategoryUpdateBinding, Category>();
