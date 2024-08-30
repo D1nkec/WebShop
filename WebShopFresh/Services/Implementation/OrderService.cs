@@ -30,6 +30,25 @@ namespace WebShopFresh.Services.Implementation
 
 
 
+        public async Task<List<OrderViewModel>> GetOrders(ClaimsPrincipal user)
+        {
+            var applicationUser = await _userManager.GetUserAsync(user);
+            var role = await _userManager.GetRolesAsync(applicationUser);
+
+            switch (role[0])
+            {
+                case Roles.Admin:
+                    return await GetOrders();
+                case Roles.Buyer:
+                    return await GetOrders(applicationUser);
+                default:
+                    throw new NotImplementedException($"{role[0]} isn't implemented in get orders!");
+
+            }
+        }
+
+
+
         public async Task<List<ProductViewModel>> GetProductItems(List<long> productItemIds)
         {
             var dbo = await _context.Products.Where(y => productItemIds.Contains(y.Id)).ToListAsync();
@@ -63,22 +82,7 @@ namespace WebShopFresh.Services.Implementation
 
 
 
-        public async Task<List<OrderViewModel>> GetOrders(ClaimsPrincipal user)
-        {
-            var applicationUser = await _userManager.GetUserAsync(user);
-            var role = await _userManager.GetRolesAsync(applicationUser);
-
-            switch (role[0])
-            {
-                case Roles.Admin:
-                    return await GetOrders();
-                case Roles.Buyer:
-                    return await GetOrders(applicationUser);
-                default:
-                    throw new NotImplementedException($"{role[0]} isn't implemented in get orders!");
-
-            }
-        }
+        
 
 
         public async Task<List<OrderViewModel>> GetOrders(ApplicationUser buyer)
@@ -100,7 +104,7 @@ namespace WebShopFresh.Services.Implementation
             var dbo = await _context.Orders
                 .Include(y => y.Buyer)
                  .Include(y => y.OrderItems)
-                .Include(y => y.OrderAddress)
+                
                 .FirstOrDefaultAsync(y => y.Id == id);
             return _mapper.Map<OrderViewModel>(dbo);
         }
@@ -128,21 +132,29 @@ namespace WebShopFresh.Services.Implementation
                 .ThenInclude(y => y.Product)
                 .FirstOrDefaultAsync(y => y.Id == id);
 
+            if (dbo == null)
+                throw new Exception("Order not found");
+
             var productItems = _context.Products
-                .Where(y => dbo.OrderItems.Select(y => y.ProductId).Contains(y.Id)).ToList();
+                .Where(y => dbo.OrderItems.Select(x => x.ProductId).Contains(y.Id)).ToList();
 
-
-            foreach (var product in dbo.OrderItems)
+            foreach (var orderItem in dbo.OrderItems)
             {
-                var target = productItems.FirstOrDefault(y => product.ProductId == y.Id);
-                if (target != null)
+                var product = productItems.FirstOrDefault(p => p.Id == orderItem.ProductId);
+                if (product != null)
                 {
-                    target.Quantity += product.Quantity;
+                    product.Quantity += orderItem.Quantity;
                 }
             }
 
             dbo.Valid = false;
+            _context.Orders.Update(dbo);
             await _context.SaveChangesAsync();
+
+            // Ensure product quantities are saved
+            _context.Products.UpdateRange(productItems);
+            await _context.SaveChangesAsync();
+
             return _mapper.Map<OrderViewModel>(dbo);
         }
 
@@ -172,13 +184,6 @@ namespace WebShopFresh.Services.Implementation
             _context.Orders.Add(dbo);
             await _context.SaveChangesAsync();
             return _mapper.Map<OrderViewModel>(dbo);
-
-
-
-
-
-
-
 
         }
 

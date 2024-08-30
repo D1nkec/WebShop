@@ -8,52 +8,47 @@
     int rowCounter = 1;
 }
 
-<h1>MyOrder</h1>
+<h1>My Order</h1>
 
-<h4>Detalji narudžbe</h4>
+<h4>Order Details</h4>
 <div class="row">
     <div class="col-5">
         <dl class="row">
-            <dt class="col-sm-2">
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Id)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Id)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Buyer.FirstName)
+            <dt class="col-sm-4">
+                Buyer Name
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Buyer.LastName)
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Buyer.FirstName) @Html.DisplayFor(model => model.Buyer.LastName)
             </dd>
-            <dt class="col-sm-2">
+            <dt class="col-sm-4">
                 @Html.DisplayNameFor(model => model.Total)
             </dt>
-            <dd class="col-sm-10">
+            <dd class="col-sm-8">
                 @Html.DisplayFor(model => model.Total)
             </dd>
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Message)
+          
+            <dt class="col-sm-4">
+                Delivery Address
             </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Message)
-            </dd>
-
-            <dt class="col-sm-2">
-                @Html.DisplayNameFor(model => model.OrderAddress)
-            </dt>
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.OrderAddress)
+            <dd class="col-sm-8">
+                @Html.DisplayFor(model => model.Buyer.Address) @Html.DisplayFor(model => model.Buyer.LastName)
             </dd>
         </dl>
     </div>
 
     <div class="col-7">
+        <h4>Ordered Items</h4>
         <table class="table">
             <thead>
                 <tr>
                     <th>#</th>
-                    <th>Naziv</th>
+                    <th>Name</th>
                     <th>Quantity</th>
                     <th>Remove</th>
                 </tr>
@@ -68,9 +63,7 @@
                             <td>@rowCounter</td>
                             <td>@productItem.Name</td>
                             <td>
-                                <span>
-                                    @Model.OrderItems[i].Quantity
-                                </span>
+                                <span>@Model.OrderItems[i].Quantity</span>
                             </td>
                             <td>
                                 <input type="checkbox" name="OrderItems[@i].Remove" value="true" />
