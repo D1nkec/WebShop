@@ -18,6 +18,8 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public Product? Product { get; set; }
         public long? ProductId { get; set; }
 
+        
+
 
 
         public decimal CalculateTotal()

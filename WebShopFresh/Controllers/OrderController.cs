@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Services.Interface;
+using WebShopFresh.Shared.Models.Binding.AddressModels;
 using WebShopFresh.Shared.Models.Binding.OrderModels;
 using WebShopFresh.Shared.Models.Dto;
 
@@ -38,19 +39,24 @@ namespace WebShopFresh.Controllers
 
             if (user == null)
             {
-                return RedirectToAction("Login", "Account"); 
+                return RedirectToAction("Login", "Account");
             }
+           
+                var sessionOrderItems = HttpContext.Session.GetString("OrderItems");
+                List<OrderItemBinding> existingOrderItems = sessionOrderItems != null
+                    ? JsonConvert.DeserializeObject<List<OrderItemBinding>>(sessionOrderItems)
+                    : new List<OrderItemBinding>();
 
-            var sessionOrderItems = HttpContext.Session.GetString("OrderItems");
-            List<OrderItemBinding> existingOrderItems = sessionOrderItems != null ? JsonConvert.DeserializeObject<List<OrderItemBinding>>(sessionOrderItems) : new List<OrderItemBinding>();
 
-            OrderBinding orderBinding = new OrderBinding()
-            {
-                OrderAddress = user.Address, 
-                OrderItems = existingOrderItems
-            };
+            var userAddress = await _accountService.GetUserAddress(User);
+                OrderBinding orderBinding = new OrderBinding()
+                {
+                    OrderAddress = userAddress != null ? _mapper.Map<AddressBinding>(userAddress) : new AddressBinding(),
+                    OrderItems = existingOrderItems
+                };
 
-            return View(orderBinding);
+                return View(orderBinding);
+            
         }
 
 

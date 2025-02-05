@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using WebShopFresh.Shared.Models.Binding.AddressModels;
 
 
 
@@ -14,6 +15,6 @@ namespace WebShopFresh.Shared.Models.ViewModel.UserModel
         [Display(Name = "Last Name")]
         public string LastName { get; set; }
 
-        public string  Address { get; set; }
+        public AddressUpdateBinding? Address { get; set; }
     }
 }

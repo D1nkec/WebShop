@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using WebShopFresh.Shared.Models.Base.OrderModels;
+using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
 
@@ -15,9 +16,7 @@ namespace WebShopFresh.Shared.Models.ViewModel.OrderModels
         public DateTime Created { get; set; }
         public ApplicationUserViewModel? Buyer { get; set; }
 
-        [Display(Name = "Order Address")]
-        public string? OrderAddress { get; set; }
-
+        public AddressViewModel? OrderAddress { get; set; }
         public List<OrderItemViewModel>? OrderItems { get; set; }
 
         [Required(ErrorMessage = "Total price is required.")]

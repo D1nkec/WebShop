@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using WebShopFresh.Shared.Models.Binding.AccountBinding;
+using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
 
@@ -13,5 +14,6 @@ namespace WebShopFresh.Services.Interface
         Task<ApplicationUserViewModel> GetUserProfileAsync(ClaimsPrincipal user);
         Task<T> GetUserProfileAsync<T>(ClaimsPrincipal user);
         Task<ApplicationUserViewModel> UpdateUserProfileAsync(ApplicationUserUpdateBinding model);
+        Task<AddressViewModel> GetUserAddress(ClaimsPrincipal user);
     }
 }

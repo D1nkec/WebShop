@@ -167,7 +167,7 @@
                 var form = $('#' + formId);
                 var data = {
                     ProductId: form.find('input[name="ProductId"]').val(),
-                    Quantity: form.find('input[name="Quantity"]').val()
+                    Quantity: form.find('input[name="Quantity"]').val() + 1
                 };
 
                 $.ajax({

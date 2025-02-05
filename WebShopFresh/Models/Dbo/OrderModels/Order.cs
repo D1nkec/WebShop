@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Shared.Interfaces;
 using WebShopFresh.Shared.Models.Base.OrderModels;
@@ -21,7 +22,8 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         [Column(TypeName = "decimal(7, 2)")]
         public decimal Total { get; set; }
 
-        public string? OrderAddress { get; set; }
+        public Address? OrderAddress { get; set; }
+        public long? OrderAddressId { get; set; }
         public ApplicationUser? Buyer { get; set; }
         public string? BuyerId { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }

@@ -6,6 +6,7 @@ using WebShopFresh.Data;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.AccountBinding;
+using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
 
@@ -37,7 +38,7 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<ApplicationUserViewModel> UpdateUserProfileAsync(ApplicationUserUpdateBinding model)
         {
-            var appUser = await _context.Users.FirstOrDefaultAsync(y => y.Id == model.Id);
+            var appUser = await _context.Users.Include(y => y.Address).FirstOrDefaultAsync(y => y.Id == model.Id);
             _mapper.Map(model, appUser);
             await _context.SaveChangesAsync();
             return _mapper.Map<ApplicationUserViewModel>(appUser);
@@ -54,6 +55,7 @@ namespace WebShopFresh.Services.Implementation
         {
 
             var dbo = await _context.Users
+                 .Include(y => y.Address)
                 .FirstOrDefaultAsync(y => y.Id == _userManager.GetUserId(user));
             return _mapper.Map<ApplicationUserViewModel>(dbo);
         }
@@ -69,9 +71,22 @@ namespace WebShopFresh.Services.Implementation
         public async Task<T> GetUserProfileAsync<T>(ClaimsPrincipal user)
         {
             var dbo = await _context.Users
+                 .Include(y => y.Address)
                 .FirstOrDefaultAsync(y => y.Id == _userManager.GetUserId(user));
             return _mapper.Map<T>(dbo);
         }
+
+
+       
+
+
+
+
+
+
+
+
+
 
 
 
@@ -106,6 +121,12 @@ namespace WebShopFresh.Services.Implementation
 
         }
 
+        public async Task<AddressViewModel> GetUserAddress(ClaimsPrincipal user)
+        {
+            var applicationUser = await _userManager.GetUserAsync(user);
+            var dboUser = await _context.Users.Include(y => y.Address).FirstOrDefaultAsync(y => y.Id == applicationUser.Id);
+            return _mapper.Map<AddressViewModel>(dboUser.Address);
+        }
 
 
         public async Task<List<ApplicationUserViewModel>> GetRegisteredUsers(DateTime? notBefore = null)

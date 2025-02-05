@@ -73,6 +73,7 @@ namespace WebShopFresh.Services.Implementation
             var dbo = await _context.Orders
                                     .Include(y => y.Buyer)
                                     .Include(y => y.OrderItems)
+                                    .Include(y => y.OrderAddress)
                                     .Where(y => y.Valid)
                                     .ToListAsync();
 
@@ -104,7 +105,7 @@ namespace WebShopFresh.Services.Implementation
             var dbo = await _context.Orders
                 .Include(y => y.Buyer)
                  .Include(y => y.OrderItems)
-                
+                 .Include(y => y.OrderAddress)
                 .FirstOrDefaultAsync(y => y.Id == id);
             return _mapper.Map<OrderViewModel>(dbo);
         }

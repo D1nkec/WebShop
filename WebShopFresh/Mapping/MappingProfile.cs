@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
+using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Models.Dbo.OrderModels;
 using WebShopFresh.Models.Dbo.ProductModels;
 using WebShopFresh.Models.Dbo.UserModel;
+using WebShopFresh.Shared.Models.Binding.AddressModels;
 using WebShopFresh.Shared.Models.Binding.CategoryModels;
 using WebShopFresh.Shared.Models.Binding.OrderModels;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
+using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.OrderModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
@@ -43,6 +46,13 @@ namespace WebShopFresh.Mapping
             CreateMap<ApplicationUserUpdateBinding, ApplicationUser>();
             CreateMap<ApplicationUser, ApplicationUserUpdateBinding>();
             CreateMap<ApplicationUser, ApplicationUserViewModel>();
+
+
+            // ADDRESS
+            CreateMap<Address, AddressUpdateBinding>();
+            CreateMap<AddressBinding, Address>();
+            CreateMap<AddressUpdateBinding, Address>();
+            CreateMap<Address, AddressViewModel>();
         }
 
     }
