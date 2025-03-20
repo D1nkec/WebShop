@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WebShopFresh.Shared.Models.Binding.AccountBinding
+﻿namespace WebShopFresh.Shared.Models.Binding.AccountBinding
 {
     public class LoginBinding
     {

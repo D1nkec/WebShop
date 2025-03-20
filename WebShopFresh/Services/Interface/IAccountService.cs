@@ -9,11 +9,11 @@ namespace WebShopFresh.Services.Interface
 {
     public interface IAccountService
     {
-        Task<bool> CreateUser(RegistrationBinding model, string role);
+        Task<ApplicationUserViewModel?> CreateUser(RegistrationBinding model, string role);
         Task<List<ApplicationUserViewModel>> GetRegisteredUsers(DateTime? notBefore = null);
         Task<ApplicationUserViewModel> GetUserProfileAsync(ClaimsPrincipal user);
         Task<T> GetUserProfileAsync<T>(ClaimsPrincipal user);
         Task<ApplicationUserViewModel> UpdateUserProfileAsync(ApplicationUserUpdateBinding model);
-        Task<AddressViewModel> GetUserAddress(ClaimsPrincipal user);
+        Task<T> GetUserAddress<T>(ClaimsPrincipal user);
     }
 }

@@ -30,9 +30,21 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="form-label">Delivery Address</label>
-                        <div class="form-control-plaintext">
-                            @Model.OrderAddress
-                        </div>
+
+                        @if (Model.OrderAddress != null)
+                        {
+                            <div class="form-control-plaintext">
+                                <p><strong>Country:</strong> @Model.OrderAddress.Country</p>
+                                <p><strong>City:</strong> @Model.OrderAddress.City</p>
+                                <p><strong>Street:</strong> @Model.OrderAddress.Street</p>
+                                <p><strong>Number:</strong> @Model.OrderAddress.Number</p>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="text-danger">No delivery address available. Please update your profile.</div>
+                        }
+
                         <span asp-validation-for="OrderAddress" class="text-danger"></span>
                     </div>
                 </div>

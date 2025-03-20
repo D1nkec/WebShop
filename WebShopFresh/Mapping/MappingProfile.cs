@@ -37,10 +37,15 @@ namespace WebShopFresh.Mapping
             // ORDER
             CreateMap<OrderUpdateBinding, Order>();
             CreateMap<OrderBinding, Order>();
-            CreateMap<Order, OrderViewModel>();
+            CreateMap<Order, OrderViewModel>()
+                .ForMember(dest => dest.Buyer, opt => opt.MapFrom(src => src.Buyer))
+                .ForPath(dest => dest.Buyer.Address, opt => opt.MapFrom(src => src.Buyer.Address));  // Ispravno mapiranje adrese
+
             CreateMap<OrderItemBinding, OrderItem>();
             CreateMap<OrderItemUpdateBinding, OrderItem>();
             CreateMap<OrderItem, OrderItemViewModel>();
+
+        
 
             // APPLICATION USER
             CreateMap<ApplicationUserUpdateBinding, ApplicationUser>();
@@ -52,7 +57,8 @@ namespace WebShopFresh.Mapping
             CreateMap<Address, AddressUpdateBinding>();
             CreateMap<AddressBinding, Address>();
             CreateMap<AddressUpdateBinding, Address>();
-            CreateMap<Address, AddressViewModel>();
+            CreateMap<Address, AddressViewModel>(); 
+            CreateMap<Address, AddressBinding>();
         }
 
     }

@@ -3,76 +3,105 @@
 @model WebShopFresh.Shared.Models.ViewModel.OrderModels.OrderViewModel
 
 @{
-    ViewData["Title"] = "MyOrder";
+    ViewData["Title"] = "My Order";
     var productItems = await orderService.GetProductItems(Model.OrderItems.Select(x => x.ProductId).ToList());
     int rowCounter = 1;
 }
 
-<h1>My Order</h1>
 
-<h4>Order Details</h4>
-<div class="row">
-    <div class="col-5">
-        <dl class="row">
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Id)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Id)
-            </dd>
-            <dt class="col-sm-4">
-                Buyer Name
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Buyer.FirstName) @Html.DisplayFor(model => model.Buyer.LastName)
-            </dd>
-            <dt class="col-sm-4">
-                @Html.DisplayNameFor(model => model.Total)
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Total)
-            </dd>
-          
-            <dt class="col-sm-4">
-                Delivery Address
-            </dt>
-            <dd class="col-sm-8">
-                @Html.DisplayFor(model => model.Buyer.Address) @Html.DisplayFor(model => model.Buyer.LastName)
-            </dd>
-        </dl>
+<div class="container mt-5">
+    <h1>Order Details</h1>
+    <hr />
+
+    <div class="row">
+        <div class="col-md-6">
+            <h4>Order Information</h4>
+            <dl class="row">
+                <dt class="col-sm-4">Order ID</dt>
+                <dd class="col-sm-8">@Model.Id</dd>
+
+                <dt class="col-sm-4">Name</dt>
+                <dd class="col-sm-8">@Model.Buyer.FirstName</dd>
+
+                <dt class="col-sm-4">Last Name</dt>
+                <dd class="col-sm-8">@Model.Buyer.LastName</dd>
+
+                <dt class="col-sm-4">Created</dt>
+                <dd class="col-sm-8">@Model.Created.ToString("dd.MM.yyyy. HH:mm:ss")</dd>
+
+                <dt class="col-sm-4">Total</dt>
+                <dd class="col-sm-8">@Model.Total.ToString("0.00")</dd>
+            </dl>
+        </div>
+
+        <div class="col-md-6">
+            <h4>Delivery Address</h4>
+            @if (Model.Buyer.Address != null)
+            {
+                <dl class="row">
+                    <dt class="col-sm-4">Country</dt>
+                    <dd class="col-sm-8">@Model.Buyer.Address.Country</dd>
+
+                    <dt class="col-sm-4">City</dt>
+                    <dd class="col-sm-8">@Model.Buyer.Address.City</dd>
+
+                    <dt class="col-sm-4">Street</dt>
+                    <dd class="col-sm-8">@Model.Buyer.Address.Street</dd>
+
+                    <dt class="col-sm-4">Number</dt>
+                    <dd class="col-sm-8">@Model.Buyer.Address.Number</dd>
+                </dl>
+            }
+            else
+            {
+                <div class="alert alert-warning">
+                    No delivery address available.
+                </div>
+            }
+        </div>
     </div>
 
-    <div class="col-7">
-        <h4>Ordered Items</h4>
-        <table class="table">
-            <thead>
+    <h4>Order Items</h4>
+    <table class="table table-striped table-bordered mt-3">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Quantity</th>
+                <th>Unit Price</th>
+              
+            </tr>
+        </thead>
+        <tbody>
+            @for (int i = 0; i < Model.OrderItems.Count; i++)
+            {
+                var productItem = productItems.FirstOrDefault(x => x.Id == Model.OrderItems[i].ProductId);
                 <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Quantity</th>
-                    <th>Remove</th>
+                    <td>
+                        @rowCounter
+                    </td>
+                    <td>
+                        @productItem.Name
+                    </td>
+                    <td>
+                        @Model.OrderItems[@i].Quantity
+                    </td>
+                    <td>
+                        @productItem.Price
+                    </td>
+                 
                 </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.OrderItems.Count; i++)
-                {
-                    var productItem = productItems.FirstOrDefault(y => y.Id == Model.OrderItems[i].ProductId);
-                    if (productItem != null)
-                    {
-                        <tr>
-                            <td>@rowCounter</td>
-                            <td>@productItem.Name</td>
-                            <td>
-                                <span>@Model.OrderItems[i].Quantity</span>
-                            </td>
-                            <td>
-                                <input type="checkbox" name="OrderItems[@i].Remove" value="true" />
-                            </td>
-                        </tr>
-                        rowCounter++;
-                    }
-                }
-            </tbody>
-        </table>
-    </div>
+
+                rowCounter++;
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4" class="text-end"><strong>Total:</strong></td>
+                <td><strong>@Model.Total.ToString("0.00")</strong></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <a href="@Url.Action("MyOrders", "Order")" class="btn btn-secondary">Back to My Orders</a>
 </div>

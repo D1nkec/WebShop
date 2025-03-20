@@ -4,25 +4,26 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.CategoryModels;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
-using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
-using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 using Microsoft.AspNetCore.Authorization;
 using WebShopFresh.Shared.Models.Dto;
+using Microsoft.Extensions.Options;
 
 namespace WebShopFresh.Controllers
 {
     [Authorize(Roles = Roles.Admin)]
     public class AdminController : Controller
     {
+        private readonly AppSettings _appSettings;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
 
-        public AdminController(IProductService productService, ICategoryService categoryService, IMapper mapper)
+        public AdminController(IProductService productService, ICategoryService categoryService, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _productService = productService;
             _categoryService = categoryService;
             _mapper = mapper;
+            _appSettings = appSettings.Value;
         }
 
         /// <summary>
@@ -34,22 +35,30 @@ namespace WebShopFresh.Controllers
             return View(product);
         }
 
-        /// <summary>
-        /// Displays a list of products.
-        /// </summary>
-        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
-        {
-            // Call ProductService method to get filtered, sorted products, and categories
-            var (products, categories) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid);
 
-            // Pass filtered and sorted products to the view
+        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true, int page = 1)
+        {
+            const int pageSize = 12; // Define how many products per page
+            var (products, categories, totalItems) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid, page, pageSize);
+
+            // Passing the selected categoryId to the view for highlighting the active category button
             ViewBag.Categories = categories;
+            ViewData["CurrentSort"] = sortOrder;
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentCategoryId"] = categoryId;  // Pass the selected categoryId
+
+            // Pagination info
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);  // Total pages
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = totalPages;
+
             return View(products);
         }
 
-        /// <summary>
-        /// Displays a form to create a new product.
-        /// </summary>
+
+
+
+
         public async Task<IActionResult> CreateProduct()
         {
             // Get all categories for dropdown

@@ -3,14 +3,11 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using WebShopFresh.Data;
+using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.AccountBinding;
-using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
-
-
-
 
 namespace WebShopFresh.Services.Implementation
 {
@@ -38,10 +35,42 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<ApplicationUserViewModel> UpdateUserProfileAsync(ApplicationUserUpdateBinding model)
         {
-            var appUser = await _context.Users.Include(y => y.Address).FirstOrDefaultAsync(y => y.Id == model.Id);
-            _mapper.Map(model, appUser);
+            var dbo = await _context.Users
+                .Include(y => y.Address) // Include address to update it properly
+                .FirstOrDefaultAsync(y => y.Id == model.Id);
+
+            if (dbo == null)
+            {
+                throw new Exception("User not found");
+            }
+
+            // Map basic user information
+            dbo.FirstName = model.FirstName;
+            dbo.LastName = model.LastName;
+            
+
+            // Check if the address already exists
+            if (dbo.Address != null)
+            {
+                // Update address properties
+                dbo.Address.Country = model.Address.Country;
+                dbo.Address.City = model.Address.City;
+                dbo.Address.Street = model.Address.Street;
+                dbo.Address.Number = model.Address.Number;
+            }
+            else if (model.Address != null) // Handle new address creation
+            {
+                dbo.Address = new Address
+                {
+                    Country = model.Address.Country,
+                    City = model.Address.City,
+                    Street = model.Address.Street,
+                    Number = model.Address.Number
+                };
+            }
+
             await _context.SaveChangesAsync();
-            return _mapper.Map<ApplicationUserViewModel>(appUser);
+            return _mapper.Map<ApplicationUserViewModel>(dbo);
         }
 
 
@@ -77,25 +106,14 @@ namespace WebShopFresh.Services.Implementation
         }
 
 
-       
 
 
-
-
-
-
-
-
-
-
-
-
-        public async Task<bool> CreateUser(RegistrationBinding model, string role)
+        public async Task<ApplicationUserViewModel?> CreateUser(RegistrationBinding model, string role)
         {
             var find = await _userManager.FindByEmailAsync(model.Email);
             if (find != null)
             {
-                return false;
+                return null;
             }
 
             var user = new ApplicationUser
@@ -104,6 +122,7 @@ namespace WebShopFresh.Services.Implementation
                 Email = model.Email,
                 FirstName = model.FirstName,
                 LastName = model.LastName,
+                PhoneNumber = model.PhoneNumber,
                 RegistrationDate = DateTime.Now
             };
 
@@ -114,18 +133,18 @@ namespace WebShopFresh.Services.Implementation
                 await _userManager.AddToRoleAsync(user, role);
                 await _userManager.UpdateAsync(user);
                 await _signInManager.SignInAsync(user, isPersistent: false);
-                return true;
+                return _mapper.Map<ApplicationUserViewModel>(user);
             }
 
-            return false;
+            return null;
 
         }
 
-        public async Task<AddressViewModel> GetUserAddress(ClaimsPrincipal user)
+     public async Task<T> GetUserAddress<T>(ClaimsPrincipal user)
         {
-            var applicationUser = await _userManager.GetUserAsync(user);
-            var dboUser = await _context.Users.Include(y => y.Address).FirstOrDefaultAsync(y => y.Id == applicationUser.Id);
-            return _mapper.Map<AddressViewModel>(dboUser.Address);
+            var appUser = await _userManager.GetUserAsync(user);
+            var dboUser = _context.Users.Include(y => y.Address).FirstOrDefault(x => x.Id == appUser.Id);
+            return _mapper.Map<T>(dboUser.Address);
         }
 
 

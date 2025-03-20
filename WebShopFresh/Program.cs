@@ -1,31 +1,42 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using WebShopFresh.Data;
 using WebShopFresh.Mapping;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Services.Implementation;
 using WebShopFresh.Services.Interface;
+using WebShopFresh.Shared.Models.Dto;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<AppSettings>(builder.Configuration);
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
+
+
+
 // Add services to the container.
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 
 builder.Services.AddDbContext<ApplicationDbContext>(opts => {
-    opts.UseSqlServer(
-    builder.Configuration["ConnectionStrings:DefaultConnection"]);
+    opts.UseSqlServer(connectionString);
 });
 
-builder.Services.AddSession(options =>
-{
-    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+builder.Services.AddSingleton<IIdentitySetup, IdentitySetup>();
+builder.Services.AddScoped<IAccountService, AccountService>();
+builder.Services.AddScoped<ICommonService, CommonService>();
+builder.Services.AddSingleton<IHostedService, QueueProcessor>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+builder.Services.AddAutoMapper(typeof(MappingProfile));
 
 builder.Services.AddDefaultIdentity<ApplicationUser>(
-               options => {
+       options => {
                    options.SignIn.RequireConfirmedAccount = true;
                    options.Password.RequiredLength = 6;
                    options.Password.RequiredUniqueChars = 0;
@@ -39,17 +50,13 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(
                .AddRoles<IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddSingleton<IIdentitySetup, IdentitySetup>();
-
-builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-
-// Add AutoMapper
-builder.Services.AddAutoMapper(typeof(MappingProfile));
-
-builder.Services.AddRazorPages();
+// Add session support
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromMinutes(30); // Set session timeout
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 builder.Services.AddControllersWithViews();
 
@@ -69,6 +76,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+//Add session middleware
 app.UseSession();
 
 app.MapControllerRoute(

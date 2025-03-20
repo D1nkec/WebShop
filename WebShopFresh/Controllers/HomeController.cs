@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using System.Diagnostics;
 using WebShopFresh.Models;
 using WebShopFresh.Services.Interface;
+using WebShopFresh.Shared.Models.Dto;
 
 
 
@@ -9,31 +11,67 @@ namespace WebShopFresh.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly AppSettings _appSettings;
         private readonly ILogger<HomeController> _logger;
         private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
+     
         
-        public HomeController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService)
+        public HomeController(ILogger<HomeController> logger, IProductService productService, ICategoryService categoryService, IOptions<AppSettings> appSettings)
         {
             _logger = logger;
             _productService = productService;
-            _categoryService = categoryService; 
+            _categoryService = categoryService;
+            _appSettings = appSettings.Value;
+
+
+
         }
 
 
 
-        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true)
+        public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true, int page = 1)
         {
-            // Call ProductService method to get filtered, sorted products, and categories
-            var (products, categories) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid);
+            const int pageSize = 9; // Define how many products per page
+            var (products, categories, totalItems) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid, page, pageSize);
 
-            // Pass filtered and sorted products to the view
+            // Passing the selected categoryId to the view for highlighting the active category button
             ViewBag.Categories = categories;
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentCategoryId"] = categoryId;  // Pass the selected categoryId
+
+            // Pagination info
+            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);  // Total pages
+            ViewData["CurrentPage"] = page;
+            ViewData["TotalPages"] = totalPages;
 
             return View(products);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         public async Task<IActionResult> Product(long id)

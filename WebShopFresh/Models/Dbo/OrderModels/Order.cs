@@ -1,11 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Shared.Interfaces;
 using WebShopFresh.Shared.Models.Base.OrderModels;
-
-
 
 namespace WebShopFresh.Models.Dbo.OrderModels
 {
@@ -19,7 +20,7 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public bool Valid { get; set; }
 
         [Required(ErrorMessage = "Total price is required.")]
-        [Column(TypeName = "decimal(7, 2)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Total { get; set; }
 
         public Address? OrderAddress { get; set; }
@@ -28,13 +29,11 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public string? BuyerId { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }
 
-
-
         public void CalculateTotal()
         {
-            if(OrderItems == null)
+            if (OrderItems == null)
             {
-            return; 
+                return;
             }
 
             Total = OrderItems.Select(y => y.CalculateTotal()).Sum();

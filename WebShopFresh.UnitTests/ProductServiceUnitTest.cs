@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using WebShopFresh.Services.Interface;
-using WebShopFresh.Shared.Models.Binding;
-using Xunit.Sdk;
-
-using Microsoft.AspNetCore.Http;
-using WebShopFresh.Models.Dbo;
-using WebShopFresh.Shared.Models.ViewModel;
+﻿using WebShopFresh.Services.Interface;
 
 namespace WebShopFresh.UnitTests
 {
-   public class ProductServiceUnitTest : WebShopSetup
+    public class ProductServiceUnitTest : WebShopSetup
     {
         private readonly IProductService _productService;
 

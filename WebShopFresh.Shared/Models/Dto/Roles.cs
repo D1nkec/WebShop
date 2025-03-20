@@ -1,7 +1,4 @@
-﻿
-
-
-namespace WebShopFresh.Shared.Models.Dto
+﻿namespace WebShopFresh.Shared.Models.Dto
 {
     public static class Roles
     {

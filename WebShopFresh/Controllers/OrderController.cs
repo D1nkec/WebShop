@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using System.Text.Json;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.AddressModels;
@@ -19,15 +19,16 @@ namespace WebShopFresh.Controllers
         private readonly IOrderService _orderService;
         private readonly IAccountService _accountService;
         private readonly IProductService _productService;
-        private readonly IMapper _mapper;
+        private readonly ICommonService _commonService;
         private readonly UserManager<ApplicationUser> _userManager;
+        private static string OrderItemSessionKey = "OrderItems";
 
-        public OrderController(IOrderService orderService, IAccountService accountService, IProductService productService, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public OrderController(IOrderService orderService, IAccountService accountService, IProductService productService, ICommonService commonService, UserManager<ApplicationUser> userManager)
         {
             _orderService = orderService;
             _accountService = accountService;
             _productService = productService;
-            _mapper = mapper;
+            _commonService = commonService;
             _userManager = userManager;
         }
 
@@ -35,28 +36,29 @@ namespace WebShopFresh.Controllers
 
         public async Task<IActionResult> Order()
         {
-            var user = await _userManager.GetUserAsync(User);
+            var sessionOrderItems = HttpContext.Session.GetString(OrderItemSessionKey);
+            List<OrderItemBinding> existingOrderItems = sessionOrderItems != null ?
+                JsonSerializer.Deserialize<List<OrderItemBinding>>(sessionOrderItems) : new List<OrderItemBinding>();
 
-            if (user == null)
+
+
+            if (!existingOrderItems.Any())
             {
-                return RedirectToAction("Login", "Account");
-            }
-           
-                var sessionOrderItems = HttpContext.Session.GetString("OrderItems");
-                List<OrderItemBinding> existingOrderItems = sessionOrderItems != null
-                    ? JsonConvert.DeserializeObject<List<OrderItemBinding>>(sessionOrderItems)
-                    : new List<OrderItemBinding>();
-
-
-            var userAddress = await _accountService.GetUserAddress(User);
-                OrderBinding orderBinding = new OrderBinding()
+                var sessionFromDb = await _commonService.GetSessionItem<List<OrderItemBinding>>(OrderItemSessionKey, User);
+                if(sessionFromDb != null)
                 {
-                    OrderAddress = userAddress != null ? _mapper.Map<AddressBinding>(userAddress) : new AddressBinding(),
-                    OrderItems = existingOrderItems
-                };
+                    existingOrderItems = sessionFromDb;
+                    HttpContext.Session.SetString(OrderItemSessionKey,JsonSerializer.Serialize(existingOrderItems));
+                }
+            }
 
-                return View(orderBinding);
-            
+
+            var respose = new OrderBinding
+            {
+                OrderItems = existingOrderItems,
+                OrderAddress = await _accountService.GetUserAddress<AddressBinding>(User)
+            };
+            return View(respose);
         }
 
 
@@ -65,12 +67,19 @@ namespace WebShopFresh.Controllers
         public async Task<IActionResult> Order(OrderBinding model)
         {
             var order = await _orderService.Order(model, User);
+            HttpContext.Session.Remove(OrderItemSessionKey);
+            await _commonService.RemoveFromSession(OrderItemSessionKey,User);
+
             return RedirectToAction("MyOrder", new {orderId = order.Id});
         }
 
         public async Task<IActionResult> MyOrder(long orderId)
         {
             var order = await _orderService.GetOrder(orderId);
+            if (order == null)
+            {
+                return NotFound();
+            }
             return View(order);
         }
 
@@ -92,7 +101,7 @@ namespace WebShopFresh.Controllers
 
         public async Task<IActionResult> CancelOrder(long orderId)
         {
-            var model = await _orderService.CancelOrder(orderId);
+            var order = await _orderService.CancelOrder(orderId);
             return RedirectToAction("MyOrders");
         }
 
@@ -109,26 +118,29 @@ namespace WebShopFresh.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToOrderItem([FromBody] List<OrderItemBinding> orderItems)
         {
-            var sessionOrderItems = HttpContext.Session.GetString("OrderItems");
-            List<OrderItemBinding> existingOrderItems = sessionOrderItems != null ? JsonConvert.DeserializeObject<List<OrderItemBinding>>(sessionOrderItems) : new List<OrderItemBinding>();
+            var sessionOrderItems = HttpContext.Session.GetString(OrderItemSessionKey);
 
-            foreach (var orderItem in orderItems)
+            List<OrderItemBinding> existingOrderItems = sessionOrderItems != null ? JsonSerializer.Deserialize<List<OrderItemBinding>>(sessionOrderItems) : new List<OrderItemBinding>();
+
+            foreach(var orderItem in orderItems)
             {
-                var existingItem = existingOrderItems.Find(item => item.ProductId == orderItem.ProductId);
-                if (existingItem != null)
+                var existingOrderItem = existingOrderItems.FirstOrDefault(item => item.ProductId == orderItem.ProductId);
+
+                if(existingOrderItem != null)
                 {
-                    existingItem.Quantity += orderItem.Quantity;
+                    existingOrderItem.Quantity += orderItem.Quantity;
                 }
                 else
                 {
                     existingOrderItems.Add(orderItem);
                 }
             }
+            await _commonService.AddSessionItem(OrderItemSessionKey, existingOrderItems, User);
+            HttpContext.Session.SetString(OrderItemSessionKey,JsonSerializer.Serialize(existingOrderItems));
 
-            HttpContext.Session.SetString("OrderItems", JsonConvert.SerializeObject(existingOrderItems));
-            return Json(new { msg = "Ok" });
-
+            return Json(existingOrderItems);
         }
+
 
     }
 }

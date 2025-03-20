@@ -1,9 +1,12 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using WebShopFresh.Data;
+using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Models.Dbo.ProductModels;
 using WebShopFresh.Services.Interface;
 using WebShopFresh.Shared.Models.Binding.ProductModels;
+using WebShopFresh.Shared.Models.Dto;
 using WebShopFresh.Shared.Models.ViewModel.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 
@@ -13,16 +16,28 @@ namespace WebShopFresh.Services.Implementation
 {
     public class ProductService : IProductService
     {
-
+       
         private readonly ApplicationDbContext _context;
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private AppSettings _appSettings;
+        private ApplicationDbContext context;
+        private object value;
+        private IMapper mapper;
 
-        public ProductService(ApplicationDbContext context, ICategoryService categoryService, IMapper mapper)
+        public ProductService(ApplicationDbContext context, ICategoryService categoryService, IMapper mapper, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _categoryService = categoryService;
             _mapper = mapper;
+            _appSettings = appSettings.Value;
+        }
+
+        public ProductService(ApplicationDbContext context, object value, IMapper mapper)
+        {
+            this.context = context;
+            this.value = value;
+            this.mapper = mapper;
         }
 
 
@@ -51,8 +66,16 @@ namespace WebShopFresh.Services.Implementation
         /// <returns></returns>
         public async Task<ProductViewModel> GetProduct(long id)
         {
-            var dbo = await _context.Products.FindAsync(id);
-            return _mapper.Map<ProductViewModel>(dbo);
+            var dbo = await _context.Products.Include(y => y.Category).FirstOrDefaultAsync(y => y.Id == id);
+
+            var productViewModel = _mapper.Map<ProductViewModel>(dbo);
+
+            if (dbo?.Category != null)
+            {
+                productViewModel.CategoryName = dbo.Category.Name;
+            }
+
+            return productViewModel;
         }
 
 
@@ -61,51 +84,84 @@ namespace WebShopFresh.Services.Implementation
         /// GET PRODUCTS
         /// </summary>
         /// <returns></returns>
-        public async Task<(List<ProductViewModel> products, List<CategoryViewModel> categories)> GetFilteredSortedProductsAndCategories(string searchString, string sortOrder, long? categoryId, bool? valid = true)
+        public async Task<(List<ProductViewModel> products, List<CategoryViewModel> categories, int totalItems)> GetFilteredSortedProductsAndCategories(
+      string searchString, string sortOrder, long? categoryId, bool? valid = true, int page = 1, int pageSize = 9)
         {
-            // Get all products
-            var products = await _context.Products
-                                         .Include(y => y.Category)
-                                         .Where(y => y.Valid == valid)
-                                         .ToListAsync();
+            // Get all products with category inclusion
+            var productsQuery = _context.Products
+                                        .Include(y => y.Category)
+                                        .Where(y => y.Valid == valid);
 
             // Apply filters
             if (!string.IsNullOrEmpty(searchString))
             {
-                products = products.Where(x => x.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase)).ToList();
+                productsQuery = productsQuery.Where(x => EF.Functions.Like(x.Name, $"%{searchString}%"));
             }
 
             if (categoryId.HasValue)
             {
-                products = products.Where(x => x.CategoryId == categoryId.Value).ToList();
+                productsQuery = productsQuery.Where(x => x.CategoryId == categoryId.Value);
             }
 
             // Apply sorting
             switch (sortOrder)
             {
                 case "name_desc":
-                    products = products.OrderByDescending(p => p.Name).ToList();
+                    productsQuery = productsQuery.OrderByDescending(p => p.Name);
                     break;
                 case "price_desc":
-                    products = products.OrderByDescending(p => p.Price).ToList();
+                    productsQuery = productsQuery.OrderByDescending(p => p.Price);
                     break;
                 case "price_asc":
-                    products = products.OrderBy(p => p.Price).ToList();
+                    productsQuery = productsQuery.OrderBy(p => p.Price);
                     break;
                 default:
-                    products = products.OrderBy(p => p.Name).ToList();
+                    productsQuery = productsQuery.OrderBy(p => p.Name);
                     break;
             }
 
-            // Get categories
+            // Get total number of items for pagination
+            int totalItems = await productsQuery.CountAsync();
+
+            // Apply pagination (skip and take based on page and pageSize)
+            var products = await productsQuery.Skip((page - 1) * pageSize)
+                                              .Take(pageSize)
+                                              .ToListAsync();
+
+            // Get categories (this doesn't depend on pagination)
             var categories = await _categoryService.GetCategories(valid: true);
 
             // Map entities to view models
             var productViewModels = products.Select(y => _mapper.Map<ProductViewModel>(y)).ToList();
             var categoryViewModels = categories.Select(y => _mapper.Map<CategoryViewModel>(y)).ToList();
 
-            return (productViewModels, categoryViewModels);
+            return (productViewModels, categoryViewModels, totalItems);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -144,5 +200,3 @@ namespace WebShopFresh.Services.Implementation
 
     }
 }
-
-

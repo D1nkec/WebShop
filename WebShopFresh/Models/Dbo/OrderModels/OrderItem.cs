@@ -1,9 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using WebShopFresh.Models.Dbo.ProductModels;
 using WebShopFresh.Shared.Interfaces;
 using WebShopFresh.Shared.Models.Base.OrderModels;
-
-
 
 namespace WebShopFresh.Models.Dbo.OrderModels
 {
@@ -15,12 +15,13 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
         public bool Valid { get; set; }
+
         public Product? Product { get; set; }
         public long? ProductId { get; set; }
 
-        
-
-
+        // Ensure decimal precision
+        [Column(TypeName = "decimal(18,4)")]
+        public override decimal Quantity { get; set; }
 
         public decimal CalculateTotal()
         {

@@ -1,9 +1,9 @@
 ﻿@model IEnumerable<WebShopFresh.Shared.Models.ViewModel.OrderModels.OrderViewModel>
 
-        ViewData["Title"] = "MyOrders";
-}
+      
 
-<h1>Moje narudžbe</h1>
+
+<h1>My Orders</h1>
 
 <table class="table table-hover">
     <thead>
@@ -41,8 +41,8 @@
                 </td>
                 <td>
                     @*   @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) | *@
-                    @Html.ActionLink("Detalji narudžbe", "MyOrder", new { orderId = item.Id }, new { @class = "btn btn-primary" })
-                    @Html.ActionLink("Obriši narudžbu", "CancelOrder", new { orderId = item.Id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Order Details", "MyOrder", new { orderId = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete Order", "CancelOrder", new { orderId = item.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
         }

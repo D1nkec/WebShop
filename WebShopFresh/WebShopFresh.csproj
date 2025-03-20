@@ -23,12 +23,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\WebShopFresh.Shared\WebShopFresh.Shared.csproj" />
-  </ItemGroup>	
-	
-	
-
-  <ItemGroup>
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
 </Project>

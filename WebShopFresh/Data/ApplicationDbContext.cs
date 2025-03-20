@@ -1,8 +1,11 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.CategoryModels;
 using WebShopFresh.Models.Dbo.OrderModels;
 using WebShopFresh.Models.Dbo.ProductModels;
+using WebShopFresh.Models.Dbo.SessionModels;
 using WebShopFresh.Models.Dbo.UserModel;
 using WebShopFresh.Shared.Interfaces;
 
@@ -24,6 +27,17 @@ namespace WebShopFresh.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Address>().HasData(
+                  new Address
+                  {
+                      Id = 1,
+                      City = "Zagreb",
+                      Created = new DateTime(2024, 5, 22),
+                      Country = "Hrvatska",
+                      Street = "Maksimirska",
+                      Number = "100",
+                      Valid = true
+                  });
 
             modelBuilder.Entity<Category>().HasData(
 
@@ -100,7 +114,7 @@ namespace WebShopFresh.Data
         Description = "A captivating science fiction novel",
         Price = 15,
         CategoryId = 3,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "/content/"
     },
     new Product
     {
@@ -111,7 +125,7 @@ namespace WebShopFresh.Data
         Description = "Comfortable cotton t-shirt",
         Price = 25,
         CategoryId = 4,
-        ImageUrl = "/content/test-sku.jpg"
+        ImageUrl = "content/test-sku.jpg"
     },
     new Product
     {
@@ -200,9 +214,155 @@ namespace WebShopFresh.Data
         Price = 40,
         CategoryId = 6,
         ImageUrl = "/content/BuildingBlocks.jpg"
+    },
+    new Product
+    {
+        Id = 12,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    }, new Product
+    {
+        Id = 13,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 14,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1315,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 15,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 16,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 17,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 18,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 19,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 20,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 21,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 22,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 23,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
+    },
+    new Product
+    {
+        Id = 24,
+        Name = "TEST",
+        Created = DateTime.Now,
+        Valid = true,
+        Description = "neki description",
+        Price = 1525,
+        CategoryId = 1,
+        ImageUrl = "/content/test-sku.jpg"
     }
-              );
-        }
+
+   );
+  }
+
+
+
 
 
 
@@ -278,6 +438,9 @@ namespace WebShopFresh.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<SessionItem> SessionItems { get; set; }
+        public DbSet<Address> Addresses { get; set; }
+       
 
     }
 }

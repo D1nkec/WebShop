@@ -1,8 +1,6 @@
 ﻿using WebShopFresh.Shared.Models.Base.CategoryModels;
 using WebShopFresh.Shared.Models.ViewModel.ProductViewModels;
 
-
-
 namespace WebShopFresh.Shared.Models.ViewModel.CategoryModels
 {
     public class CategoryViewModel : CategoryBase

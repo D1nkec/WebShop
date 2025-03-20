@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using WebShopFresh.Models.Dbo.AddressModels;
 
 
 
@@ -8,7 +9,7 @@ namespace WebShopFresh.Models.Dbo.UserModel
     {
         public string FirstName { get; set; }
         public string  LastName { get; set; }
-        public string? Address { get; set; }
+        public Address? Address { get; set; }
         public DateTime? RegistrationDate { get; set; }
 
     }

@@ -1,7 +1,4 @@
-﻿
-
-
-namespace WebShopFresh.Shared.Interfaces
+﻿namespace WebShopFresh.Shared.Interfaces
 {
    public interface IBaseTableAtributes
     {

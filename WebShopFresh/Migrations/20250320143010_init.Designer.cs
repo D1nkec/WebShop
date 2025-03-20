@@ -12,8 +12,8 @@ using WebShopFresh.Data;
 namespace WebShopFresh.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250123132843_newmigration1223")]
-    partial class newmigration1223
+    [Migration("20250320143010_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -197,7 +197,20 @@ namespace WebShopFresh.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Address");
+                    b.ToTable("Addresses");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            City = "Zagreb",
+                            Country = "Hrvatska",
+                            Created = new DateTime(2024, 5, 22, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Number = "100",
+                            Street = "Maksimirska",
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        });
                 });
 
             modelBuilder.Entity("WebShopFresh.Models.Dbo.CategoryModels.Category", b =>
@@ -233,7 +246,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 1L,
-                            Created = new DateTime(2025, 1, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9099),
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6052),
                             Description = "Test description",
                             Name = "Test kategorija",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -242,7 +255,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 2L,
-                            Created = new DateTime(2025, 1, 13, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9142),
+                            Created = new DateTime(2025, 3, 10, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6098),
                             Description = "Electronic devices and accessories",
                             Name = "Electronics",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -251,7 +264,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 3L,
-                            Created = new DateTime(2024, 11, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9145),
+                            Created = new DateTime(2025, 1, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6102),
                             Description = "Books of various genres",
                             Name = "Books",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -260,7 +273,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 4L,
-                            Created = new DateTime(2024, 12, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9149),
+                            Created = new DateTime(2025, 2, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6106),
                             Description = "Men's, Women's, and Children's clothing",
                             Name = "Clothing",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -269,7 +282,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 5L,
-                            Created = new DateTime(2024, 1, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9152),
+                            Created = new DateTime(2024, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6108),
                             Description = "Appliances and gadgets for home use",
                             Name = "Home Appliances",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -278,7 +291,7 @@ namespace WebShopFresh.Migrations
                         new
                         {
                             Id = 6L,
-                            Created = new DateTime(2024, 12, 24, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9155),
+                            Created = new DateTime(2025, 2, 18, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6111),
                             Description = "Toys for children of all ages",
                             Name = "Toys",
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -307,7 +320,7 @@ namespace WebShopFresh.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Total")
-                        .HasColumnType("decimal(7, 2)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");
@@ -345,7 +358,7 @@ namespace WebShopFresh.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(18,2)");
+                        .HasColumnType("decimal(18,4)");
 
                     b.Property<DateTime>("Updated")
                         .HasColumnType("datetime2");
@@ -411,7 +424,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 1L,
                             CategoryId = 2L,
-                            Created = new DateTime(2025, 1, 18, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9321),
+                            Created = new DateTime(2025, 3, 15, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6142),
                             Description = "Latest model smartphone with high-end features",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Smartphone",
@@ -424,7 +437,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 2L,
                             CategoryId = 3L,
-                            Created = new DateTime(2024, 11, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9328),
+                            Created = new DateTime(2025, 1, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6149),
                             Description = "A captivating science fiction novel",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Science Fiction Novel",
@@ -437,7 +450,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 3L,
                             CategoryId = 4L,
-                            Created = new DateTime(2024, 12, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9331),
+                            Created = new DateTime(2025, 2, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6152),
                             Description = "Comfortable cotton t-shirt",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Men's T-Shirt",
@@ -450,7 +463,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 4L,
                             CategoryId = 5L,
-                            Created = new DateTime(2024, 1, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9334),
+                            Created = new DateTime(2024, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6155),
                             Description = "High-efficiency vacuum cleaner",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Vacuum Cleaner",
@@ -463,7 +476,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 5L,
                             CategoryId = 1L,
-                            Created = new DateTime(2025, 1, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9337),
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6158),
                             Description = "neki description",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "TEST",
@@ -476,7 +489,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 6L,
                             CategoryId = 6L,
-                            Created = new DateTime(2025, 1, 13, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9340),
+                            Created = new DateTime(2025, 3, 10, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6161),
                             Description = "Popular action figure toy",
                             ImageUrl = "/content/action-figure-496wpt-1.jpg",
                             Name = "Action Figure",
@@ -489,7 +502,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 7L,
                             CategoryId = 2L,
-                            Created = new DateTime(2025, 1, 3, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9342),
+                            Created = new DateTime(2025, 2, 28, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6163),
                             Description = "High-performance laptop for work and play",
                             ImageUrl = "/content/laptop.jpg",
                             Name = "Laptop",
@@ -502,7 +515,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 8L,
                             CategoryId = 3L,
-                            Created = new DateTime(2024, 10, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9345),
+                            Created = new DateTime(2024, 12, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6166),
                             Description = "An intriguing mystery thriller novel",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Mystery Thriller",
@@ -515,7 +528,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 9L,
                             CategoryId = 4L,
-                            Created = new DateTime(2024, 11, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9348),
+                            Created = new DateTime(2025, 1, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6170),
                             Description = "Stylish and comfortable women's jeans",
                             ImageUrl = "/content/test-sku.jpg",
                             Name = "Women's Jeans",
@@ -528,7 +541,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 10L,
                             CategoryId = 5L,
-                            Created = new DateTime(2023, 1, 23, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9351),
+                            Created = new DateTime(2023, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6173),
                             Description = "Multi-functional kitchen blender",
                             ImageUrl = "/content/blender.jpg",
                             Name = "Blender",
@@ -541,7 +554,7 @@ namespace WebShopFresh.Migrations
                         {
                             Id = 11L,
                             CategoryId = 6L,
-                            Created = new DateTime(2025, 1, 8, 14, 28, 42, 597, DateTimeKind.Local).AddTicks(9354),
+                            Created = new DateTime(2025, 3, 5, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6176),
                             Description = "Creative building blocks for children",
                             ImageUrl = "/content/BuildingBlocks.jpg",
                             Name = "Building Blocks",
@@ -549,7 +562,214 @@ namespace WebShopFresh.Migrations
                             Quantity = 0m,
                             Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Valid = true
+                        },
+                        new
+                        {
+                            Id = 12L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6179),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 13L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6181),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 14L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6184),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1315m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 15L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6187),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 16L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6190),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 17L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6192),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 18L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6195),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 19L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6198),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 20L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6201),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 21L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6203),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 22L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6206),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 23L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6209),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
+                        },
+                        new
+                        {
+                            Id = 24L,
+                            CategoryId = 1L,
+                            Created = new DateTime(2025, 3, 20, 15, 30, 9, 505, DateTimeKind.Local).AddTicks(6212),
+                            Description = "neki description",
+                            ImageUrl = "/content/test-sku.jpg",
+                            Name = "TEST",
+                            Price = 1525m,
+                            Quantity = 0m,
+                            Updated = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Valid = true
                         });
+                });
+
+            modelBuilder.Entity("WebShopFresh.Models.Dbo.SessionModels.SessionItem", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("Valid")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("SessionItems");
                 });
 
             modelBuilder.Entity("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", b =>
@@ -560,8 +780,8 @@ namespace WebShopFresh.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<string>("Address")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long?>("AddressId")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -619,6 +839,8 @@ namespace WebShopFresh.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -717,6 +939,24 @@ namespace WebShopFresh.Migrations
                         .HasForeignKey("CategoryId");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("WebShopFresh.Models.Dbo.SessionModels.SessionItem", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("WebShopFresh.Models.Dbo.UserModel.ApplicationUser", b =>
+                {
+                    b.HasOne("WebShopFresh.Models.Dbo.AddressModels.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId");
+
+                    b.Navigation("Address");
                 });
 
             modelBuilder.Entity("WebShopFresh.Models.Dbo.CategoryModels.Category", b =>
