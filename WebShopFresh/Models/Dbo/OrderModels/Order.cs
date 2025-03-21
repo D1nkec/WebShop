@@ -24,7 +24,7 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public decimal Total { get; set; }
 
         public Address? OrderAddress { get; set; }
-        public long? OrderAddressId { get; set; }
+        public long? OrderAddressId { get; set; } 
         public ApplicationUser? Buyer { get; set; }
         public string? BuyerId { get; set; }
         public ICollection<OrderItem>? OrderItems { get; set; }

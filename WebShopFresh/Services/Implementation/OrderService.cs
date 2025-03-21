@@ -59,7 +59,7 @@ namespace WebShopFresh.Services.Implementation
         }
 
 
-        
+
         public async Task<List<OrderViewModel>> GetOrders(ClaimsPrincipal user)
         {
             var applicationUser = await _userManager.GetUserAsync(user);
@@ -153,30 +153,43 @@ namespace WebShopFresh.Services.Implementation
 
         public async Task<OrderViewModel> Order(OrderBinding model, ApplicationUser buyer)
         {
-            var dbo = _mapper.Map<Order>(model);
-            var productItems = _context.Products
-                .Where(y => model.OrderItems.Select(y => y.ProductId).Contains(y.Id)).ToList();
+            // Ensure the address is loaded when the user is fetched
+            var buyerWithAddress = await _context.Users
+                                                  .Include(u => u.Address) // Eagerly load the Address
+                                                  .FirstOrDefaultAsync(u => u.Id == buyer.Id);
 
+            if (buyerWithAddress?.Address == null)
+            {
+                throw new Exception("Buyer does not have an address assigned.");
+            }
+
+            var dbo = _mapper.Map<Order>(model);
+
+            dbo.OrderAddressId = buyerWithAddress.Address.Id;
+
+            var productItems = _context.Products
+                .Where(y => model.OrderItems.Select(item => item.ProductId).Contains(y.Id))
+                .ToList();
 
             foreach (var product in dbo.OrderItems)
             {
                 var target = productItems.FirstOrDefault(y => product.ProductId == y.Id);
                 if (target != null)
                 {
-                    target.Quantity -= product.Quantity;
-                    product.Price = target.Price;
+                    target.Quantity -= product.Quantity; 
+                    product.Price = target.Price; 
                 }
             }
 
+            dbo.Buyer = buyer; 
+            dbo.CalculateTotal(); 
 
-            dbo.Buyer = buyer;
-            dbo.CalculateTotal();
-
-           _context.Orders.Add(dbo);
+            _context.Orders.Add(dbo);
             await _context.SaveChangesAsync();
+
             return _mapper.Map<OrderViewModel>(dbo);
         }
-
-       
     }
 }
+
+    

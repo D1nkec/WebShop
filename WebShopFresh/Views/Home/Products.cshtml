@@ -177,7 +177,7 @@
                 var form = $('#' + formId);
                 var data = {
                     ProductId: form.find('input[name="ProductId"]').val(),
-                    Quantity: form.find('input[name="Quantity"]').val() + 1
+                    Quantity: form.find('input[name="Quantity"]').val() 
                 };
 
                 $.ajax({
@@ -189,7 +189,7 @@
                         alert('Product added to cart!');
                     },
                     error: function (xhr, status, error) {
-                        alert('Error adding product to cart. ' + xhr.responseText);
+                                        window.location.href = '@Url.Action("Login", "Account")';
                     }
                 });
             });
