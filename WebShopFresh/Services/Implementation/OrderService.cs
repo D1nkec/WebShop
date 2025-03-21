@@ -100,7 +100,7 @@ namespace WebShopFresh.Services.Implementation
         {
             var dbo = await _context.Orders
                 .Include(y => y.Buyer)
-                .ThenInclude(b => b.Address)  // Učitaj adresu zajedno sa kupcem
+                .ThenInclude(b => b.Address)  
                 .Include(y => y.OrderItems)
                 .Include(y => y.OrderAddress)
                 .FirstOrDefaultAsync(y => y.Id == id);
@@ -153,9 +153,8 @@ namespace WebShopFresh.Services.Implementation
 
         public async Task<OrderViewModel> Order(OrderBinding model, ApplicationUser buyer)
         {
-            // Ensure the address is loaded when the user is fetched
             var buyerWithAddress = await _context.Users
-                                                  .Include(u => u.Address) // Eagerly load the Address
+                                                  .Include(u => u.Address) 
                                                   .FirstOrDefaultAsync(u => u.Id == buyer.Id);
 
             if (buyerWithAddress?.Address == null)

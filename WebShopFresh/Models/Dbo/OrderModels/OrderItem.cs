@@ -19,7 +19,6 @@ namespace WebShopFresh.Models.Dbo.OrderModels
         public Product? Product { get; set; }
         public long? ProductId { get; set; }
 
-        // Ensure decimal precision
         [Column(TypeName = "decimal(18,4)")]
         public override decimal Quantity { get; set; }
 

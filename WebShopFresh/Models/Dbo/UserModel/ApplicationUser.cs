@@ -2,7 +2,6 @@
 using WebShopFresh.Models.Dbo.AddressModels;
 
 
-
 namespace WebShopFresh.Models.Dbo.UserModel
 {
     public class ApplicationUser : IdentityUser

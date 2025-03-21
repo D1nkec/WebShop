@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using WebShopFresh.Models.Dbo.AddressModels;
 using WebShopFresh.Models.Dbo.CategoryModels;
@@ -363,9 +362,6 @@ namespace WebShopFresh.Data
 
 
 
-
-
-
         public override int SaveChanges()
         {
 
@@ -393,8 +389,6 @@ namespace WebShopFresh.Data
             }
             return base.SaveChanges();
         }
-
-
 
         public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
         {

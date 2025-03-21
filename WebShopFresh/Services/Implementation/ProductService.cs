@@ -84,59 +84,52 @@ namespace WebShopFresh.Services.Implementation
         /// GET PRODUCTS
         /// </summary>
         /// <returns></returns>
-        public async Task<(List<ProductViewModel> products, List<CategoryViewModel> categories, int totalItems)> GetFilteredSortedProductsAndCategories(
-      string searchString, string sortOrder, long? categoryId, bool? valid = true, int page = 1, int pageSize = 9)
+        public async Task<(List<ProductViewModel> products, List<CategoryViewModel> categories, int totalItems)>
+              GetFilteredSortedProductsAsync(ProductFilterOptions options)
         {
-            // Get all products with category inclusion
-            var productsQuery = _context.Products
-                                        .Include(y => y.Category)
-                                        .Where(y => y.Valid == valid);
-
-            // Apply filters
-            if (!string.IsNullOrEmpty(searchString))
+            try
             {
-                productsQuery = productsQuery.Where(x => EF.Functions.Like(x.Name, $"%{searchString}%"));
-            }
+                var productsQuery = _context.Products
+                                            .Include(y => y.Category)
+                                            .Where(y => y.Valid == options.Valid);
 
-            if (categoryId.HasValue)
+                if (!string.IsNullOrEmpty(options.SearchString))
+                {
+                    productsQuery = productsQuery.Where(x => EF.Functions.Like(x.Name, $"%{options.SearchString}%"));
+                }
+
+                if (options.CategoryId.HasValue)
+                {
+                    productsQuery = productsQuery.Where(x => x.CategoryId == options.CategoryId.Value);
+                }
+
+                productsQuery = options.SortOrder switch
+                {
+                    "name_desc" => productsQuery.OrderByDescending(p => p.Name),
+                    "price_desc" => productsQuery.OrderByDescending(p => p.Price),
+                    "price_asc" => productsQuery.OrderBy(p => p.Price),
+                    _ => productsQuery.OrderBy(p => p.Name),
+                };
+
+                int totalItems = await productsQuery.CountAsync();
+                var products = await productsQuery.Skip((options.Page - 1) * options.PageSize)
+                                                  .Take(options.PageSize)
+                                                  .ToListAsync();
+
+                var categories = await _categoryService.GetCategories(valid: true);
+                var productViewModels = products.Select(y => _mapper.Map<ProductViewModel>(y)).ToList();
+                var categoryViewModels = categories.Select(y => _mapper.Map<CategoryViewModel>(y)).ToList();
+
+                return (productViewModels, categoryViewModels, totalItems);
+            }
+            catch (Exception ex)
             {
-                productsQuery = productsQuery.Where(x => x.CategoryId == categoryId.Value);
+                Console.WriteLine($"Error fetching products: {ex.Message}");
+                return (new List<ProductViewModel>(), new List<CategoryViewModel>(), 0);
             }
-
-            // Apply sorting
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    productsQuery = productsQuery.OrderByDescending(p => p.Name);
-                    break;
-                case "price_desc":
-                    productsQuery = productsQuery.OrderByDescending(p => p.Price);
-                    break;
-                case "price_asc":
-                    productsQuery = productsQuery.OrderBy(p => p.Price);
-                    break;
-                default:
-                    productsQuery = productsQuery.OrderBy(p => p.Name);
-                    break;
-            }
-
-            // Get total number of items for pagination
-            int totalItems = await productsQuery.CountAsync();
-
-            // Apply pagination (skip and take based on page and pageSize)
-            var products = await productsQuery.Skip((page - 1) * pageSize)
-                                              .Take(pageSize)
-                                              .ToListAsync();
-
-            // Get categories (this doesn't depend on pagination)
-            var categories = await _categoryService.GetCategories(valid: true);
-
-            // Map entities to view models
-            var productViewModels = products.Select(y => _mapper.Map<ProductViewModel>(y)).ToList();
-            var categoryViewModels = categories.Select(y => _mapper.Map<CategoryViewModel>(y)).ToList();
-
-            return (productViewModels, categoryViewModels, totalItems);
+         
         }
+
 
 
 

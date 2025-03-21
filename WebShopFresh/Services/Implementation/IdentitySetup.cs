@@ -45,7 +45,7 @@ namespace WebShopFresh.Services.Implementation
                 FirstName = "Admin",
                 LastName = "Admin",
                 EmailConfirmed = true,
-                // Ensure AddressId is not set for the admin user
+              
             };
 
             string pwd = "1Admin0!";
@@ -55,7 +55,6 @@ namespace WebShopFresh.Services.Implementation
                 await userManager.AddToRoleAsync(user, Roles.Admin);
             }
         }
-
 
 
 

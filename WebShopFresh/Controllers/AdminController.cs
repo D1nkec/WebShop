@@ -36,26 +36,30 @@ namespace WebShopFresh.Controllers
         }
 
 
+
         public async Task<IActionResult> Products(string searchString, string sortOrder, long? categoryId, bool? valid = true, int page = 1)
         {
-            const int pageSize = 12; // Define how many products per page
-            var (products, categories, totalItems) = await _productService.GetFilteredSortedProductsAndCategories(searchString, sortOrder, categoryId, valid, page, pageSize);
+            var options = new ProductFilterOptions
+            {
+                SearchString = searchString,
+                SortOrder = sortOrder,
+                CategoryId = categoryId,
+                Valid = valid,
+                Page = page,
 
-            // Passing the selected categoryId to the view for highlighting the active category button
+            };
+
+            var (products, categories, totalItems) = await _productService.GetFilteredSortedProductsAsync(options);
+
             ViewBag.Categories = categories;
             ViewData["CurrentSort"] = sortOrder;
             ViewData["CurrentFilter"] = searchString;
-            ViewData["CurrentCategoryId"] = categoryId;  // Pass the selected categoryId
-
-            // Pagination info
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);  // Total pages
+            ViewData["CurrentCategoryId"] = categoryId;
             ViewData["CurrentPage"] = page;
-            ViewData["TotalPages"] = totalPages;
+            ViewData["TotalPages"] = (int)Math.Ceiling(totalItems / (double)options.PageSize);
 
             return View(products);
         }
-
-
 
 
 

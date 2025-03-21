@@ -29,6 +29,7 @@ namespace WebShopFresh.Controllers
             return View();
         }
 
+
         [HttpPost]
         public async Task<IActionResult> Register(RegistrationBinding model)
         {
@@ -40,6 +41,8 @@ namespace WebShopFresh.Controllers
         {
             return View();
         }
+
+
 
         [HttpPost]
         public async Task<IActionResult> Login(LoginBinding model)
@@ -65,12 +68,14 @@ namespace WebShopFresh.Controllers
             return View(model);
         }
 
+
         [Authorize]
         public async Task<IActionResult> MyProfile()
         {
             var profile = await _accountService.GetUserProfileAsync<ApplicationUserUpdateBinding>(User);
             return View(profile);
         }
+
 
         [Authorize]
         [HttpPost]
@@ -79,6 +84,5 @@ namespace WebShopFresh.Controllers
             await _accountService.UpdateUserProfileAsync(model);
             return RedirectToAction("MyProfile");
         }
-
     }
 }

@@ -44,12 +44,11 @@ namespace WebShopFresh.Services.Implementation
                 throw new Exception("User not found");
             }
 
-            // Map basic user information
+            
             dbo.FirstName = model.FirstName;
             dbo.LastName = model.LastName;
             
 
-            // Check if the address already exists
             if (dbo.Address != null)
             {
                 // Update address properties
@@ -58,7 +57,7 @@ namespace WebShopFresh.Services.Implementation
                 dbo.Address.Street = model.Address.Street;
                 dbo.Address.Number = model.Address.Number;
             }
-            else if (model.Address != null) // Handle new address creation
+            else if (model.Address != null) 
             {
                 dbo.Address = new Address
                 {

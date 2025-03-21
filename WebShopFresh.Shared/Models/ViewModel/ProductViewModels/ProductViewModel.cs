@@ -6,8 +6,6 @@ namespace WebShopFresh.Shared.Models.ViewModel.ProductViewModels
     {
         public long Id { get; set; }
         public long? CategoryId { get; set; }
-        
         public string? CategoryName { get; set; }
-
     }
 }

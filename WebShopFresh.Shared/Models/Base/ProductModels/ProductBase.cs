@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-
 namespace WebShopFresh.Shared.Models.Base.ProductModels
 {
     public abstract class ProductBase

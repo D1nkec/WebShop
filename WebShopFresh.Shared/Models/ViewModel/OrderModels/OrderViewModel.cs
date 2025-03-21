@@ -4,7 +4,6 @@ using WebShopFresh.Shared.Models.Base.OrderModels;
 using WebShopFresh.Shared.Models.ViewModel.AddressModels;
 using WebShopFresh.Shared.Models.ViewModel.UserModel;
 
-
 namespace WebShopFresh.Shared.Models.ViewModel.OrderModels
 {
     public class OrderViewModel : OrderBase

@@ -1,7 +1,4 @@
-﻿
-
-
-namespace WebShopFresh.Shared.Models.Binding.OrderModels
+﻿namespace WebShopFresh.Shared.Models.Binding.OrderModels
 {
     public class OrderItemBinding
     {
